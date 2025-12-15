@@ -1,0 +1,11 @@
+{
+    "name": "Bukti",
+    "alias": "bukti",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Bukti\\Providers\\BuktiServiceProvider"
+    ],
+    "files": []
+}

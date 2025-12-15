@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+.font-poppins-700 {
+    @apply font-bold text-xl;
+}
+
+.font-poppins-600 {
+    @apply font-semibold;
+}
+
+.font-poppins-500 {
+    @apply font-medium;
+}
+
+.font-poppins-400 {
+    @apply font-normal;
+}

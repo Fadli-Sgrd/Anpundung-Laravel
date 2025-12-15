@@ -1,0 +1,8 @@
+{
+    "Laporan": true,
+    "Bukti": true,
+    "Kategori": true,
+    "Kontak": true,
+    "Seed": true,
+    "KontakSeeder": true
+}

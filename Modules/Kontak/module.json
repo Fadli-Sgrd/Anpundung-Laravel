@@ -1,0 +1,11 @@
+{
+    "name": "Kontak",
+    "alias": "kontak",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Kontak\\Providers\\KontakServiceProvider"
+    ],
+    "files": []
+}

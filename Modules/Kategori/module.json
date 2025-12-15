@@ -1,0 +1,11 @@
+{
+    "name": "Kategori",
+    "alias": "kategori",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Kategori\\Providers\\KategoriServiceProvider"
+    ],
+    "files": []
+}
