@@ -1,80 +1,67 @@
 <x-layouts.app title="Profile">
-    <div style="max-width: 700px; margin: 0 auto; padding: 0 16px;">
-        <!-- Header -->
-        <div style="margin-bottom: 64px;">
-            <h1 style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 40px; color: #333; margin-bottom: 8px;">
-                Profile Saya
-            </h1>
-            <p style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #999; font-size: 16px;">
-                Kelola informasi akun Anda
-            </p>
+    <div class="max-w-4xl mx-auto">
+        <div class="mb-10 text-center md:text-left">
+            <h1 class="text-3xl font-extrabold text-slate-800 mb-2">Profile Saya</h1>
+            <p class="text-slate-500">Kelola informasi akun dan keamanan Anda</p>
         </div>
 
-        <!-- Success Message -->
         @if (session('success'))
-            <div style="background: #d4edda; border-left: 5px solid #28a745; border-radius: 12px; padding: 16px; margin-bottom: 40px;">
-                <p style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #155724; margin: 0;">
-                    <i class="bx bx-check-circle" style="vertical-align: middle; margin-right: 8px;"></i> {{ session('success') }}
-                </p>
+            <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl mb-6 flex items-center gap-2">
+                <i class='bx bxs-check-circle text-xl'></i> {{ session('success') }}
             </div>
         @endif
 
-        <!-- Account Info Card -->
-        <div style="background: white; padding: 32px; border-radius: 12px; border: 2px solid #eee; margin-bottom: 40px;">
-            <h2 style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 20px; color: #333; margin-bottom: 24px;">Edit Akun</h2>
-            
-            <form method="POST" action="/profile/update">
-                @csrf
-                @method('PATCH')
-
-                <!-- Name Field -->
-                <div style="margin-bottom: 24px;">
-                    <label for="name" style="display: block; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; margin-bottom: 8px;">Nama Lengkap</label>
-                    <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" required 
-                        style="width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 14px; box-sizing: border-box;">
-                    @error('name')
-                        <p style="color: #dc3545; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 12px; margin-top: 6px;">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Email Field -->
-                <div style="margin-bottom: 24px;">
-                    <label for="email" style="display: block; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; margin-bottom: 8px;">Email</label>
-                    <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" required 
-                        style="width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 14px; box-sizing: border-box;">
-                    @error('email')
-                        <p style="color: #dc3545; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 12px; margin-top: 6px;">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Member Info -->
-                <div style="background: #f8f9fa; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
-                    <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; font-family: 'Poppins', sans-serif; font-weight: 500; color: #666;">
-                        <span>Role</span>
-                        <span style="color: #308478;">{{ ucfirst($user->role) }}</span>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="md:col-span-1">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 text-center">
+                    <div class="w-24 h-24 mx-auto bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-full flex items-center justify-center text-4xl font-bold mb-4 shadow-lg">
+                        {{ substr($user->name, 0, 1) }}
                     </div>
-                    <div style="display: flex; justify-content: space-between; padding: 8px 0; font-family: 'Poppins', sans-serif; font-weight: 500; color: #666;">
-                        <span>Bergabung</span>
-                        <span>{{ $user->created_at->format('d M Y') }}</span>
+                    <h2 class="font-bold text-lg text-slate-800">{{ $user->name }}</h2>
+                    <p class="text-sm text-slate-500 mb-4">{{ $user->email }}</p>
+                    <div class="inline-block px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-bold uppercase">
+                        {{ ucfirst($user->role) }}
+                    </div>
+                    
+                    <div class="mt-6 pt-6 border-t border-slate-100 text-left">
+                        <p class="text-xs text-slate-400 font-bold uppercase mb-3">Menu Cepat</p>
+                        <a href="/laporan" class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 text-slate-600 hover:text-blue-600 transition text-sm font-medium">
+                            <i class='bx bxs-file-doc text-lg'></i> Laporan Saya
+                        </a>
                     </div>
                 </div>
+            </div>
 
-                <!-- Submit Button -->
-                <button type="submit" style="width: 100%; background: #308478; color: white; padding: 12px; border: none; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    <i class="bx bx-save" style="font-size: 16px;"></i> Simpan Perubahan
-                </button>
-            </form>
-        </div>
+            <div class="md:col-span-2">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <h3 class="font-bold text-xl text-slate-800 mb-6 border-b border-slate-100 pb-4">Edit Informasi</h3>
+                    
+                    <form method="POST" action="/profile/update" class="space-y-6">
+                        @csrf
+                        @method('PATCH')
 
-        <!-- Reports Link -->
-        <div style="background: white; padding: 32px; border-radius: 12px; border: 2px solid #eee;">
-            <h3 style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 18px; color: #333; margin-bottom: 12px;">Laporan Saya</h3>
-            <p style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #666; margin-bottom: 20px; font-size: 14px;">
-                Kelola semua laporan pungli yang Anda buat
-            </p>
-            <a href="/laporan" style="display: inline-flex; align-items: center; gap: 8px; background: #308478; color: white; padding: 10px 24px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; text-decoration: none; font-size: 14px;">
-                <i class="bx bx-list-ul" style="font-size: 16px;"></i> Lihat Laporan Saya
-            </a>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Nama Lengkap</label>
+                            <input type="text" name="name" value="{{ old('name', $user->name) }}" required 
+                                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition font-medium text-slate-700">
+                            @error('name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Alamat Email</label>
+                            <input type="email" name="email" value="{{ old('email', $user->email) }}" required 
+                                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition font-medium text-slate-700">
+                            @error('email') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        </div>
+
+                        <div class="pt-4">
+                            <button type="submit" class="w-full md:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg shadow-blue-200 transition transform active:scale-95 flex items-center justify-center gap-2">
+                                <i class='bx bx-save'></i> Simpan Perubahan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </x-layouts.app>

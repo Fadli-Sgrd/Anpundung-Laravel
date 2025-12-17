@@ -29,7 +29,14 @@ class AuthController extends Controller
 
         if (Auth::attempt($validated)) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+
+            // === LOGIKA REDIRECT BERDASARKAN ROLE ===
+            if ($request->user()->role === 'admin') {
+                return redirect()->intended('/dashboard');
+            }
+
+            // Jika bukan admin (User biasa), ke Home
+            return redirect()->intended('/home');
         }
 
         return back()->withErrors([
@@ -60,12 +67,13 @@ class AuthController extends Controller
             'name'     => $validated['name'],
             'email'    => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'role'     => 'user', // Default role
+            'role'     => 'user', // Default role user biasa
         ]);
 
         Auth::login($user);
 
-        return redirect()->intended('/dashboard');
+        // Karena yang daftar pasti user biasa, langsung arahkan ke Home
+        return redirect()->intended('/home');
     }
 
     /**

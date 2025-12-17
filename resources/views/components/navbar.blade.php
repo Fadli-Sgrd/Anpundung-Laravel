@@ -1,201 +1,101 @@
-<nav
-    style="background: white; height: 96px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; top: 0; width: 100%; z-index: 50; display: flex; justify-content: space-between; align-items: center; padding: 0 24px;">
-    <!-- Logo Section -->
-    <div style="display: flex; align-items: center; gap: 8px;">
-        <i class='bx bx-shield-exclamation' style="font-size: 24px; color: #308478;"></i>
-        <div>
-            <div style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 18px; color: #308478;">ANPUNDUNG
+<nav x-data="{ scrolled: false, mobileOpen: false }" 
+     @scroll.window="scrolled = (window.pageYOffset > 20)"
+     class="fixed w-full z-50 top-0 transition-all duration-300 border-b border-transparent"
+     :class="scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm border-slate-200 py-3' : 'bg-white py-5 shadow-sm'">
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-14">
+            
+            <a href="{{ Auth::check() && Auth::user()->role === 'admin' ? '/dashboard' : '/home' }}" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200 group-hover:scale-110 transition">
+                    <i class='bx bx-shield-exclamation text-2xl'></i>
+                </div>
+                <div class="leading-tight">
+                    <div class="font-bold text-xl text-slate-800 tracking-tight group-hover:text-blue-600 transition">ANPUNDUNG</div>
+                    <div class="text-[10px] font-bold text-blue-600 tracking-widest uppercase">Anti Pungli Bandung</div>
+                </div>
+            </a>
+
+            <div class="hidden md:flex items-center gap-1">
+                @if (Illuminate\Support\Facades\Auth::check())
+                    @php $user = Illuminate\Support\Facades\Auth::user() @endphp
+
+                    @if ($user->role === 'admin')
+                        <x-nav-link href="/dashboard" icon="bxs-dashboard" active="{{ request()->is('dashboard') }}">Dashboard</x-nav-link>
+                        <x-nav-link href="/laporan" icon="bxs-file-pdf" active="{{ request()->is('laporan*') }}">Kelola Laporan</x-nav-link>
+                        <x-nav-link href="/kategoris" icon="bx-tag" active="{{ request()->is('kategoris*') }}">Kategori</x-nav-link>
+                    @else
+                        <x-nav-link href="/home" icon="bxs-home" active="{{ request()->is('home') }}">Home</x-nav-link>
+                        <x-nav-link href="/edukasi" icon="bxs-book" active="{{ request()->is('edukasi') }}">Edukasi</x-nav-link>
+                        <x-nav-link href="/berita" icon="bxs-news" active="{{ request()->is('berita') }}">Berita</x-nav-link>
+                        <x-nav-link href="/kontak" icon="bxs-message" active="{{ request()->is('kontak') }}">Kontak</x-nav-link>
+                    @endif
+
+                    <div class="ml-4 relative" x-data="{ open: false }">
+                        <button @click="open = !open" class="flex items-center gap-3 pl-4 border-l border-slate-200 hover:opacity-80 transition">
+                            <div class="text-right hidden lg:block">
+                                <p class="text-xs font-bold text-slate-700">{{ Auth::user()->name }}</p>
+                                <p class="text-xs text-slate-500 capitalize">{{ Auth::user()->role }}</p>
+                            </div>
+                            <div class="w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold border-2 border-white shadow-sm">
+                                {{ substr(Auth::user()->name, 0, 1) }}
+                            </div>
+                        </button>
+
+                        <div x-show="open" @click.away="open = false" 
+                             class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 border border-slate-100 z-50 transform origin-top-right transition-all"
+                             style="display: none;">
+                            <a href="/profile" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition">
+                                <i class='bx bx-user-circle'></i> Profile Saya
+                            </a>
+                            <form method="POST" action="/logout">
+                                @csrf
+                                <button type="submit" class="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition">
+                                    <i class='bx bx-log-out'></i> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @else
+                    <a href="/login" class="text-sm font-bold text-slate-600 hover:text-blue-600 px-4 py-2 transition">Masuk</a>
+                    <a href="/register" class="text-sm font-bold bg-blue-600 text-white px-5 py-2.5 rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 hover:-translate-y-0.5 transition transform">Daftar Sekarang</a>
+                @endif
             </div>
-            <div style="font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 11px; color: #999;">Anti Pungli
-                Bandung</div>
+
+            <button @click="mobileOpen = !mobileOpen" class="md:hidden text-2xl text-slate-600 p-2">
+                <i class='bx' :class="mobileOpen ? 'bx-x' : 'bx-menu'"></i>
+            </button>
         </div>
     </div>
 
-    @if (Illuminate\Support\Facades\Auth::check())
-        @php $user = Illuminate\Support\Facades\Auth::user() @endphp
-
-        <!-- Desktop Menu -->
-        <div style="display: none; gap: 24px; align-items: center;" class="desktop-menu">
-            @if ($user->role === 'admin')
-                {{-- ADMIN MENU --}}
-                <a href="/dashboard"
-                    style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                    <i class='bx bxs-dashboard'></i> Dashboard
-                </a>
-                <a href="/laporan"
-                    style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                    <i class='bx bxs-file-pdf'></i> Kelola Laporan
-                </a>
-                <a href="/kategoris"
-                    style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                    <i class='bx bx-tag'></i> Kategori
-                </a>
-                <a href="/kontak"
-                    style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                    <i class='bx bxs-message'></i> Kontak
-                </a>
-                <a href="/profile"
-                    style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                    <i class='bx bxs-user-circle'></i> Profile
-                </a>
-            @else
-                {{-- USER MENU --}}
-                <a href="/home"
-                    style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                    <i class='bx bxs-home'></i> Home
-                </a>
-                <a href="/kontak"
-                    style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                    <i class='bx bxs-message'></i> Kontak
-                </a>
-                <a href="/berita"
-                    style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                    <i class='bx bxs-news'></i> Berita
-                </a>
-                <a href="/profile"
-                    style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                    <i class='bx bxs-user-circle'></i> Profile
-                </a>
-            @endif
-        </div>
-
-        <!-- Logout Button -->
-        <form method="POST" action="/logout" style="display: none;" class="desktop-menu">
-            @csrf
-            <button type="submit"
-                style="background: #308478; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px;">
-                <i class='bx bx-log-out'></i> Logout
-            </button>
-        </form>
-    @else
-        <!-- Desktop Auth Links -->
-        <div style="display: none; gap: 16px; align-items: center;" class="desktop-menu">
-            <a href="/login"
-                style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #308478; text-decoration: none; display: flex; align-items: center; gap: 6px;">
-                <i class='bx bx-log-in'></i> Login
-            </a>
-            <a href="/register"
-                style="background: #308478; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-family: 'Poppins', sans-serif; font-weight: 500; display: flex; align-items: center; gap: 6px;">
-                <i class='bx bx-user-plus'></i> Register
-            </a>
-        </div>
-    @endif
-
-    <!-- Hamburger Button -->
-    <button id="hamburger" style="display: none; background: none; border: none; font-size: 24px; cursor: pointer;">
-        <i class='bx bx-menu'></i>
-    </button>
-</nav>
-
-<!-- Mobile Sidebar -->
-<div id="sidebar"
-    style="position: fixed; top: 0; right: -300px; width: 300px; height: 100vh; background: white; box-shadow: -2px 0 10px rgba(0,0,0,0.1); z-index: 50; transition: right 0.3s ease; padding-top: 80px; padding: 20px;">
-    <!-- Mobile Menu -->
-    <div style="display: flex; flex-direction: column; gap: 0;">
+    <div x-show="mobileOpen" class="md:hidden bg-white border-t border-slate-100 absolute w-full left-0 shadow-lg py-4 px-4 flex flex-col gap-2 z-40">
         @if (Illuminate\Support\Facades\Auth::check())
-            @php $user = Illuminate\Support\Facades\Auth::user() @endphp
-
-            @if ($user->role === 'admin')
-                <a href="/dashboard"
-                    style="padding: 12px 0; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px;">
-                    <i class='bx bxs-dashboard'></i> Dashboard
-                </a>
-                <a href="/laporan"
-                    style="padding: 12px 0; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px;">
-                    <i class='bx bxs-file-pdf'></i> Kelola Laporan
-                </a>
-                <a href="/kategoris"
-                    style="padding: 12px 0; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px;">
-                    <i class='bx bx-tag'></i> Kategori
-                </a>
-                <a href="/kontak"
-                    style="padding: 12px 0; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px;">
-                    <i class='bx bxs-message'></i> Kontak
-                </a>
-                <a href="/profile"
-                    style="padding: 12px 0; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px;">
-                    <i class='bx bxs-user-circle'></i> Profile
-                </a>
+            @if (Illuminate\Support\Facades\Auth::user()->role === 'admin')
+                <x-nav-link href="/dashboard" icon="bxs-dashboard" active="{{ request()->is('dashboard') }}">Dashboard</x-nav-link>
+                <x-nav-link href="/laporan" icon="bxs-file-pdf" active="{{ request()->is('laporan*') }}">Kelola Laporan</x-nav-link>
+                <x-nav-link href="/kategoris" icon="bx-tag" active="{{ request()->is('kategoris*') }}">Kategori</x-nav-link>
             @else
-                <a href="/home"
-                    style="padding: 12px 0; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px;">
-                    <i class='bx bxs-home'></i> Home
-                </a>
-                <a href="/edukasi"
-                    style="padding: 12px 0; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px;">
-                    <i class='bx bxs-book'></i> Edukasi
-                </a>
-                <a href="/kontak"
-                    style="padding: 12px 0; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px;">
-                    <i class='bx bxs-message'></i> Kontak
-                </a>
-                <a href="/berita"
-                    style="padding: 12px 0; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px;">
-                    <i class='bx bxs-news'></i> Berita
-                </a>
-                <a href="/profile"
-                    style="padding: 12px 0; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px;">
-                    <i class='bx bxs-user-circle'></i> Profile
-                </a>
+                <x-nav-link href="/home" icon="bxs-home" active="{{ request()->is('home') }}">Home</x-nav-link>
+                <x-nav-link href="/edukasi" icon="bxs-book" active="{{ request()->is('edukasi') }}">Edukasi</x-nav-link>
+                <x-nav-link href="/berita" icon="bxs-news" active="{{ request()->is('berita') }}">Berita</x-nav-link>
+                <x-nav-link href="/kontak" icon="bxs-message" active="{{ request()->is('kontak') }}">Kontak</x-nav-link>
             @endif
 
-            <form method="POST" action="/logout" style="margin-top: 16px;">
-                @csrf
-                <button type="submit"
-                    style="width: 100%; background: #308478; color: white; padding: 10px; border: none; border-radius: 6px; font-family: 'Poppins', sans-serif; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                    <i class='bx bx-log-out'></i> Logout
-                </button>
-            </form>
+            <div class="border-t border-slate-100 my-2 pt-2">
+                <a href="/profile" class="flex items-center gap-3 p-3 bg-blue-50 rounded-lg mb-2">
+                    <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">{{ substr(Auth::user()->name, 0, 1) }}</div>
+                    <div class="text-sm font-bold text-blue-900">{{ Auth::user()->name }}</div>
+                </a>
+                <form method="POST" action="/logout">
+                    @csrf
+                    <button class="w-full text-left p-3 text-red-600 font-bold bg-red-50 rounded-lg text-sm flex items-center gap-2">
+                        <i class='bx bx-log-out'></i> Logout
+                    </button>
+                </form>
+            </div>
         @else
-            <a href="/login"
-                style="padding: 12px 0; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; text-decoration: none; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 8px;">
-                <i class='bx bx-log-in'></i> Login
-            </a>
-            <a href="/register"
-                style="margin-top: 16px; background: #308478; color: white; padding: 10px; border-radius: 6px; text-align: center; text-decoration: none; font-family: 'Poppins', sans-serif; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                <i class='bx bx-user-plus'></i> Register
-            </a>
+            <a href="/login" class="block w-full text-center py-3 border border-slate-200 rounded-lg font-bold text-slate-600">Masuk</a>
+            <a href="/register" class="block w-full text-center py-3 bg-blue-600 text-white rounded-lg font-bold">Daftar</a>
         @endif
     </div>
-</div>
-
-<script>
-    const hamburger = document.getElementById('hamburger');
-    const sidebar = document.getElementById('sidebar');
-    const desktopMenus = document.querySelectorAll('.desktop-menu');
-
-    // Show desktop menu on screens >= 1024px
-    function updateNavBar() {
-        if (window.innerWidth >= 1024) {
-            desktopMenus.forEach(menu => menu.style.display = 'flex');
-            hamburger.style.display = 'none';
-            sidebar.style.right = '-300px';
-        } else {
-            desktopMenus.forEach(menu => menu.style.display = 'none');
-            hamburger.style.display = 'block';
-        }
-    }
-
-    hamburger.addEventListener('click', () => {
-        sidebar.style.right = '0';
-    });
-
-    // Close sidebar when clicking on a link
-    document.querySelectorAll('#sidebar a').forEach(link => {
-        link.addEventListener('click', () => {
-            sidebar.style.right = '-300px';
-        });
-    });
-
-    // Close sidebar when clicking form submit
-    const logoutForm = document.querySelector('#sidebar form');
-    if (logoutForm) {
-        logoutForm.addEventListener('submit', () => {
-            sidebar.style.right = '-300px';
-        });
-    }
-
-    // Update on page load and resize
-    updateNavBar();
-    window.addEventListener('resize', updateNavBar);
-</script>
+</nav>

@@ -32,5 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/berita', [PageController::class, 'berita'])->name('berita');
     Route::get('/profile', [PageController::class, 'profile'])->name('profile');
     Route::patch('/profile/update', [PageController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/edukasi', function () {
+        return view('pages.edukasi');
+    })->name('edukasi');
 });
 

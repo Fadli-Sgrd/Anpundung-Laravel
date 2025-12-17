@@ -1,59 +1,66 @@
-<x-layouts.app title="Daftar Laporan">
-    <div style="max-width: 900px; margin: 0 auto; padding: 0 16px;">
-        <!-- Header -->
-        <div style="margin-bottom: 64px;">
-            <h1 style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 40px; color: #333; margin-bottom: 8px;">
-                Laporan Saya
-            </h1>
-            <p style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #999; font-size: 16px;">
-                Pantau status laporan pungli yang Anda buat
-            </p>
+<x-layouts.app title="Laporan Saya">
+    <div class="max-w-5xl mx-auto px-4">
+        
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-10">
+            <div>
+                <h1 class="text-3xl font-extrabold text-slate-800 mb-2">Riwayat Laporan</h1>
+                <p class="text-slate-500">Pantau status dan perkembangan aduan yang telah Anda kirim.</p>
+            </div>
+            <a href="/laporan/create" class="inline-flex items-center gap-2 bg-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 transition transform hover:-translate-y-1">
+                <i class='bx bx-plus-circle text-xl'></i> Buat Laporan Baru
+            </a>
         </div>
 
         @if ($laporan->count() === 0)
-                <!-- Empty State -->
-            <div style="background: white; padding: 48px 32px; border-radius: 12px; border: 2px solid #eee; text-align: center;">
-                <div style="font-size: 48px; margin-bottom: 16px; color: #308478;"><i class="bx bx-clipboard" style="font-size:48px; vertical-align: middle;"></i></div>
-                <h2 style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 20px; color: #333; margin-bottom: 8px;">Belum ada laporan</h2>
-                <p style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #666; margin-bottom: 24px; font-size: 14px;">
-                    Anda belum membuat laporan apapun. Mulai buat laporan sekarang!
-                </p>
-                <a href="/laporan/create" style="display: inline-block; background: #308478; color: white; padding: 10px 24px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; text-decoration: none; font-size: 14px;">
-                    Buat Laporan Baru
-                </a>
+            <div class="bg-white rounded-3xl border-2 border-dashed border-slate-200 p-16 text-center">
+                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300">
+                    <i class='bx bx-notepad text-4xl'></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Belum ada laporan</h3>
+                <p class="text-slate-500 mb-8 max-w-md mx-auto">Anda belum pernah membuat laporan pungli. Jika menemukan indikasi pungli, segera laporkan di sini.</p>
+                <a href="/laporan/create" class="text-blue-600 font-bold hover:underline">Mulai Buat Laporan &rarr;</a>
             </div>
         @else
-            <!-- Reports List -->
-            <div style="display: flex; flex-direction: column; gap: 20px; margin-bottom: 32px;">
+            <div class="grid gap-6">
                 @foreach ($laporan as $l)
-                    <a href="/laporan/{{ $l->kode_laporan }}" style="display: block; background: white; padding: 24px; border-radius: 12px; border: 2px solid #eee; text-decoration: none; transition: all 0.2s ease; border-left: 5px solid #308478;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;">
-                            <div>
-                                <h3 style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 18px; color: #333; margin-bottom: 8px;">
-                                    {{ $l->judul }}
-                                </h3>
-                                <p style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #999; font-size: 13px; margin: 0;">
-                                    {{ \Carbon\Carbon::parse($l->tanggal)->format('d M Y') }} • {{ $l->kategori->nama_kategori ?? 'N/A' }}
-                                </p>
-                            </div>
-                            <span style="background: 
-                                @if ($l->status_tindakan === 'Pending') #ffc107
-                                @elseif ($l->status_tindakan === 'Proses') #17a2b8
-                                @elseif ($l->status_tindakan === 'Selesai') #28a745
-                                @else #dc3545 @endif;
-                                color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-family: 'Poppins', sans-serif; font-weight: 600; white-space: nowrap;">
+                    <a href="/laporan/{{ $l->kode_laporan }}" class="group block bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-400 transition relative overflow-hidden">
+                        <div class="absolute top-6 right-6">
+                            @php
+                                $statusClass = match($l->status_tindakan) {
+                                    'Pending' => 'bg-yellow-100 text-yellow-700',
+                                    'Proses' => 'bg-blue-100 text-blue-700',
+                                    'Selesai' => 'bg-green-100 text-green-700',
+                                    'Ditolak' => 'bg-red-100 text-red-700',
+                                    default => 'bg-slate-100 text-slate-700'
+                                };
+                            @endphp
+                            <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider {{ $statusClass }}">
                                 {{ $l->status_tindakan }}
+                            </span>
+                        </div>
+
+                        <div class="pr-24"> <h3 class="text-lg font-bold text-slate-800 mb-2 group-hover:text-blue-600 transition">{{ $l->judul }}</h3>
+                            <div class="flex items-center gap-4 text-xs font-medium text-slate-500 mb-4">
+                                <span class="flex items-center gap-1">
+                                    <i class='bx bx-calendar'></i> {{ \Carbon\Carbon::parse($l->tanggal)->format('d M Y') }}
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class='bx bx-tag'></i> {{ $l->kategori->nama_kategori ?? 'Umum' }}
+                                </span>
+                            </div>
+                            <p class="text-slate-600 text-sm line-clamp-2 leading-relaxed">
+                                {{ $l->deskripsi }}
+                            </p>
+                        </div>
+                        
+                        <div class="mt-4 pt-4 border-t border-slate-50 flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-400">Kode: #{{ $l->kode_laporan }}</span>
+                            <span class="text-sm font-bold text-blue-600 flex items-center gap-1 group-hover:translate-x-1 transition">
+                                Lihat Detail <i class='bx bx-right-arrow-alt'></i>
                             </span>
                         </div>
                     </a>
                 @endforeach
-            </div>
-
-            <!-- Create New Report Button -->
-            <div style="text-align: center;">
-                <a href="/laporan/create" style="display: inline-block; background: #308478; color: white; padding: 10px 24px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; text-decoration: none; font-size: 14px;">
-                    <i class="bx bx-plus" style="font-size: 20px;"></i> Buat Laporan Baru
-                </a>
             </div>
         @endif
     </div>

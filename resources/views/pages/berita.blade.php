@@ -1,94 +1,82 @@
-<x-layouts.app title="Berita - Laporan Publik">
-    <div style="max-width: 900px; margin: 0 auto; padding: 0 16px;">
-        <!-- Header -->
-        <div style="margin-bottom: 64px;">
-            <h1 style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 40px; color: #333; margin-bottom: 8px;">
-                Laporan Publik
-            </h1>
-            <p style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #999; font-size: 16px;">
-                Lihat laporan pungli yang dilaporkan komunitas ANPUNDUNG
-            </p>
+<x-layouts.app title="Laporan Publik">
+    <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-800 mb-4">Laporan Publik</h1>
+            <p class="text-slate-500 text-lg">Transparansi aduan masyarakat demi lingkungan bebas pungli.</p>
         </div>
 
         @if ($laporan->count() === 0)
-            <!-- Empty State -->
-            <div style="background: white; padding: 48px 32px; border-radius: 12px; border: 2px solid #eee; text-align: center;">
-                <div style="font-size: 48px; margin-bottom: 16px;"><i class="bx bx-list-ul" style="font-size: 48px;"></i></div>
-                <h2 style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 20px; color: #333; margin-bottom: 8px;">Belum ada laporan</h2>
-                <p style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #666; margin-bottom: 24px; font-size: 14px;">
-                    Jadilah yang pertama melaporkan kasus pungli ke sistem ANPUNDUNG
-                </p>
-                <a href="/laporan/create" style="display: inline-flex; align-items: center; gap: 8px; background: #308478; color: white; padding: 10px 24px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; text-decoration: none; font-size: 14px;">
-                    <i class="bx bx-plus-circle" style="font-size: 16px;"></i> Buat Laporan Pertama
+            <div class="bg-white p-12 rounded-3xl border border-slate-100 text-center shadow-sm">
+                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300 text-4xl">
+                    <i class='bx bx-folder-open'></i>
+                </div>
+                <h3 class="font-bold text-xl text-slate-800 mb-2">Belum ada laporan publik</h3>
+                <p class="text-slate-500 mb-8">Jadilah yang pertama berkontribusi.</p>
+                <a href="/laporan/create" class="inline-block px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+                    Buat Laporan
                 </a>
             </div>
         @else
-            <!-- Reports List -->
-            <div style="display: flex; flex-direction: column; gap: 32px;">
+            <div class="space-y-6">
                 @foreach ($laporan as $item)
-                    <div style="background: white; padding: 32px; border-radius: 12px; border: 2px solid #eee; border-left: 5px solid #308478;">
-                        <!-- Title & Status -->
-                        <div style="margin-bottom: 16px;">
-                            <h2 style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 22px; color: #333; margin-bottom: 12px;">
-                                {{ $item->judul }}
-                            </h2>
-                            <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-                                <span style="background: 
-                                    @if ($item->status_tindakan === 'Pending') #ffc107
-                                    @elseif ($item->status_tindakan === 'Proses') #17a2b8
-                                    @elseif ($item->status_tindakan === 'Selesai') #28a745
-                                    @else #dc3545 @endif;
-                                    color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-family: 'Poppins', sans-serif; font-weight: 600;">
-                                    {{ $item->status_tindakan }}
-                                </span>
-                                <p style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #999; font-size: 13px; margin: 0;">
-                                    {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }} • {{ $item->kategori->nama_kategori }}
-                                </p>
+                    <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                        <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+                            <div>
+                                <h2 class="text-xl font-bold text-slate-800 mb-2">{{ $item->judul }}</h2>
+                                <div class="flex items-center gap-3 text-xs font-medium text-slate-500">
+                                    <span class="flex items-center gap-1"><i class='bx bx-calendar'></i> {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</span>
+                                    <span>•</span>
+                                    <span class="text-blue-600">{{ $item->kategori->nama_kategori }}</span>
+                                </div>
+                            </div>
+                            @php
+                                $statusColors = [
+                                    'Pending' => 'bg-yellow-100 text-yellow-700',
+                                    'Proses' => 'bg-blue-100 text-blue-700',
+                                    'Selesai' => 'bg-green-100 text-green-700',
+                                    'Ditolak' => 'bg-red-100 text-red-700'
+                                ];
+                                $colorClass = $statusColors[$item->status_tindakan] ?? 'bg-slate-100 text-slate-700';
+                            @endphp
+                            <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider h-fit w-fit {{ $colorClass }}">
+                                {{ $item->status_tindakan }}
+                            </span>
+                        </div>
+
+                        <p class="text-slate-600 leading-relaxed mb-6">{{ Str::limit($item->deskripsi, 200) }}</p>
+
+                        <div class="bg-slate-50 rounded-xl p-4 flex flex-wrap gap-6 mb-6">
+                            <div class="flex items-center gap-2 text-sm text-slate-600">
+                                <i class='bx bxs-map text-blue-500'></i>
+                                <span class="font-medium">{{ $item->alamat }}</span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-slate-600">
+                                <i class='bx bxs-user-circle text-blue-500'></i>
+                                <span>{{ $item->user->name }}</span>
                             </div>
                         </div>
 
-                        <!-- Description -->
-                        <p style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #666; line-height: 1.8; margin-bottom: 16px;">
-                            {{ Str::limit($item->deskripsi, 250) }}
-                        </p>
-
-                        <!-- Location & Reporter -->
-                        <div style="background: #f8f9fa; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
-                            <div style="display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
-                                <div>
-                                    <p style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #999; font-size: 12px; margin: 0 0 4px 0;">Lokasi</p>
-                                    <p style="font-family: 'Poppins', sans-serif; font-weight: 600; color: #333; margin: 0;"><i class="bx bx-map" style="vertical-align: middle; margin-right: 4px;"></i> {{ $item->alamat }}</p>
-                                </div>
-                                <div>
-                                    <p style="font-family: 'Poppins', sans-serif; font-weight: 500; color: #999; font-size: 12px; margin: 0 0 4px 0;">Pelapor</p>
-                                    <p style="font-family: 'Poppins', sans-serif; font-weight: 600; color: #333; margin: 0;"><i class="bx bx-user" style="vertical-align: middle; margin-right: 4px;"></i> {{ $item->user->name }}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Evidence -->
                         @if ($item->bukti->count() > 0)
-                            <div style="margin-bottom: 16px;">
-                                <p style="font-family: 'Poppins', sans-serif; font-weight: 600; color: #333; font-size: 14px; margin-bottom: 12px;">
-                                    <i class="bx bx-image" style="vertical-align: middle; margin-right: 4px;"></i> Bukti ({{ $item->bukti->count() }} file)
-                                </p>
-                                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                                    @foreach ($item->bukti->take(4) as $b)
+                            <div class="mb-6">
+                                <p class="text-xs font-bold text-slate-400 uppercase mb-3">Lampiran Bukti</p>
+                                <div class="flex gap-2">
+                                    @foreach ($item->bukti->take(3) as $b)
                                         @if ($b->jenis === 'Gambar')
-                                            <img src="{{ asset('storage/' . $b->path_file) }}" alt="Bukti" style="height: 80px; width: 80px; border-radius: 8px; object-fit: cover; border: 1px solid #eee;">
+                                            <img src="{{ asset('storage/' . $b->path_file) }}" class="w-16 h-16 object-cover rounded-lg border border-slate-200">
                                         @else
-                                            <div style="height: 80px; width: 80px; background: #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px;">
-                                                <i class="bx bx-video" style="font-size: 32px;"></i>
-                                            </div>
+                                            <div class="w-16 h-16 bg-slate-800 rounded-lg flex items-center justify-center text-white"><i class='bx bx-video'></i></div>
                                         @endif
                                     @endforeach
+                                    @if($item->bukti->count() > 3)
+                                        <div class="w-16 h-16 bg-slate-100 rounded-lg flex items-center justify-center text-slate-500 text-xs font-bold">+{{ $item->bukti->count() - 3 }}</div>
+                                    @endif
                                 </div>
                             </div>
                         @endif
 
-                        <a href="#" style="display: inline-block; background: #308478; color: white; padding: 8px 16px; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 600; text-decoration: none; font-size: 13px;">
-                            Baca Selengkapnya
-                        </a>
+                        <button class="text-blue-600 font-bold text-sm hover:underline flex items-center gap-1">
+                            Lihat Detail <i class='bx bx-right-arrow-alt'></i>
+                        </button>
                     </div>
                 @endforeach
             </div>

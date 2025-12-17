@@ -2,22 +2,24 @@
 
 namespace Modules\Kategori\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Modules\Kategori\Models\Kategori;
+use Illuminate\Routing\Controller;
+use Modules\Kategori\Models\Kategori; 
+use Illuminate\Support\Facades\Auth;
 
 class KategoriController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Tampilkan daftar kategori
      */
     public function index()
     {
-        return view('kategori::index');
+        $kategoris = Kategori::latest()->get();
+        return view('kategori::index', compact('kategoris'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Tampilkan form tambah kategori
      */
     public function create()
     {
@@ -25,39 +27,28 @@ class KategoriController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Simpan kategori baru
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nama_kategori' => 'required|string|max:255',
-            'deskripsi'     => 'nullable|string|max:1000',
+        $request->validate([
+            'nama_kategori' => 'required|string|max:255|unique:kategori_laporan,nama_kategori', // Cek unique ke tabel 'kategori_laporan'
+            'deskripsi'     => 'nullable|string', // Deskripsi boleh kosong
+        ], [
+            'nama_kategori.required' => 'Nama kategori wajib diisi.',
+            'nama_kategori.unique'   => 'Nama kategori sudah ada.',
         ]);
 
-        $kategori = Kategori::create($validated);
+        Kategori::create([
+            'nama_kategori' => $request->nama_kategori,
+            'deskripsi'     => $request->deskripsi,
+        ]);
 
-        if ($request->wantsJson()) {
-            return response()->json([
-                'success' => true,
-                'data'    => $kategori,
-            ], 201);
-        }
-
-        return redirect()->route('kategori.index')
-            ->with('success', 'Kategori berhasil dibuat');
+        return redirect('/kategoris')->with('success', 'Kategori berhasil ditambahkan!');
     }
 
     /**
-     * Show the specified resource.
-     */
-    public function show($id)
-    {
-        $kategori = Kategori::findOrFail($id);
-        return view('kategori::show', compact('kategori'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
+     * Tampilkan form edit
      */
     public function edit($id)
     {
@@ -66,57 +57,34 @@ class KategoriController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update kategori
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'nama_kategori' => 'required|string|max:255',
-            'deskripsi'     => 'nullable|string|max:1000',
+        $kategori = Kategori::findOrFail($id);
+
+        $request->validate([
+            // Ignore ID saat cek unique agar tidak error saat update diri sendiri
+            'nama_kategori' => 'required|string|max:255|unique:kategori_laporan,nama_kategori,' . $id,
+            'deskripsi'     => 'nullable|string',
         ]);
 
-        $kategori = Kategori::findOrFail($id);
-        $kategori->update($validated);
+        $kategori->update([
+            'nama_kategori' => $request->nama_kategori,
+            'deskripsi'     => $request->deskripsi,
+        ]);
 
-        if ($request->wantsJson()) {
-            return response()->json([
-                'success' => true,
-                'data'    => $kategori,
-            ]);
-        }
-
-        return redirect()->route('kategori.index')
-            ->with('success', 'Kategori berhasil diperbarui');
+        return redirect('/kategoris')->with('success', 'Kategori berhasil diperbarui!');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Hapus kategori
      */
     public function destroy($id)
     {
         $kategori = Kategori::findOrFail($id);
-
-        if ($kategori->laporan()->exists()) {
-            if (request()->wantsJson()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Tidak bisa hapus kategori yang memiliki laporan',
-                ], 422);
-            }
-            return redirect()->back()
-                ->withErrors('Tidak bisa hapus kategori yang memiliki laporan');
-        }
-
         $kategori->delete();
 
-        if (request()->wantsJson()) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Kategori berhasil dihapus',
-            ]);
-        }
-
-        return redirect()->route('kategori.index')
-            ->with('success', 'Kategori berhasil dihapus');
+        return redirect('/kategoris')->with('success', 'Kategori berhasil dihapus!');
     }
 }
