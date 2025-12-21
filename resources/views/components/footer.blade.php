@@ -10,25 +10,21 @@
                     Sistem pelaporan Pungutan Liar (Pungli) terpercaya untuk RW 14 Bandung. Bersama ciptakan lingkungan yang bersih dan transparan.
                 </p>
             </div>
-            
+
             <div>
-                <h4 class="text-white font-bold mb-4">Akses Cepat</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="/home" class="hover:text-blue-400 transition">Beranda</a></li>
-                    <li><a href="/laporan" class="hover:text-blue-400 transition">Buat Laporan</a></li>
-                    <li><a href="/edukasi" class="hover:text-blue-400 transition">Edukasi</a></li>
-                </ul>
+
             </div>
 
             <div>
-                <h4 class="text-white font-bold mb-4">Legal</h4>
+                   <h4 class="text-white font-bold mb-4">Instansi</h4>
                 <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-blue-400 transition">Kebijakan Privasi</a></li>
-                    <li><a href="#" class="hover:text-blue-400 transition">Syarat & Ketentuan</a></li>
+                    <li><a href="https://polrestabesbandung.id/beranda/" class="hover:text-blue-400 transition">Polersta Bandung</a></li>
+                    <li><a href="/laporan" class="hover:text-blue-400 transition">Satpol PP Bandung</a></li>
+                    <li><a href="/edukasi" class="hover:text-blue-400 transition">Edukasi</a></li>
                 </ul>
             </div>
         </div>
-        
+
         <div class="border-t border-slate-800 pt-8 text-center text-xs text-slate-500">
             &copy; {{ date('Y') }} ANPUNDUNG Project. All rights reserved.
         </div>

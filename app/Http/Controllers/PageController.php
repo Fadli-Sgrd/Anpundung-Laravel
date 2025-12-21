@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Modules\Laporan\Models\Laporan;
 use Illuminate\Support\Facades\Auth;
+use Modules\Kategori\Models\Kategori;
+
 
 class PageController extends Controller
 {
@@ -13,7 +15,8 @@ class PageController extends Controller
      */
     public function home()
     {
-        return view('pages.home');
+         $kategori = Kategori::all();
+        return view('pages.home', compact('kategori'));
     }
 
     /**
@@ -27,13 +30,13 @@ class PageController extends Controller
     /**
      * Berita - public laporan dari semua user
      */
-    public function berita()
+    public function riwayat()
     {
         $laporan = Laporan::with(['user', 'kategori', 'bukti'])
             ->latest()
             ->get();
-        
-        return view('pages.berita', compact('laporan'));
+
+        return view('pages.riwayat', compact('laporan'));
     }
 
     /**
