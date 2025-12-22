@@ -9,6 +9,8 @@ use Modules\Kontak\Database\Seeders\KontakSeeder;
 use Modules\Laporan\Database\Seeders\LaporanSeeder;
 use Modules\Kategori\Database\Seeders\KategoriSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Modules\Kategori\Models\Kategori;
+use Modules\Laporan\Models\Laporan;
 
 class DatabaseSeeder extends Seeder
 {

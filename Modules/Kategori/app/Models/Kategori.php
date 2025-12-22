@@ -6,6 +6,7 @@ use Modules\Laporan\Models\Laporan;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Kategori\Database\Factories\KategoriFactory;
 
 class Kategori extends Model
 {
@@ -18,6 +19,10 @@ class Kategori extends Model
         'deskripsi'
     ];
 
+    protected static function newFactory()
+    {
+        return KategoriFactory::new();
+    }
 
     public function laporan(): HasMany
     {
