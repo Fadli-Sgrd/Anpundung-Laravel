@@ -5,20 +5,16 @@ namespace Modules\Kontak\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\Kontak\Models\Kontak;
+use Modules\Kategori\Models\Kategori; // ini yang kurang
 
 class KontakController extends Controller
 {
-    /**
-     * Display contact form
-     */
     public function index()
     {
-        return view('kontak::index');
+        $kategori = Kategori::all();
+        return view('kontak::index', compact('kategori'));
     }
 
-    /**
-     * Store contact message
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -32,31 +28,4 @@ class KontakController extends Controller
 
         return redirect()->back()->with('success', 'Pesan kontak Anda berhasil dikirim. Kami akan segera merespon.');
     }
-
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
-    {
-        return view('kontak::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        return view('kontak::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id) {}
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id) {}
 }

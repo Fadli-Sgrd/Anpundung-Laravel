@@ -267,192 +267,34 @@
         </div>
     </div>
 
-    @auth
-        <div id="modal-lapor" class="fixed inset-0 z-[9999] hidden">
-            <div id="modal-backdrop" class="absolute inset-0 bg-slate-900/60"></div>
-
-            <div class="relative z-10 w-full h-full flex items-center justify-center p-4">
-                <div class="w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden">
-                    <div class="p-6 border-b flex items-center justify-between">
-                        <h3 class="text-xl font-extrabold text-slate-900">Buat Laporan</h3>
-                        <button type="button" id="btn-close-lapor">Tutup</button>
-                    </div>
-
-                    <div id="msg-modal" class="hidden mx-6 mt-6 p-4 rounded-xl text-sm font-bold"></div>
-
-                    <form id="form-laporan-modal" enctype="multipart/form-data" class="p-6 space-y-6">
-                        @csrf
-                        <form id="form-laporan-modal" enctype="multipart/form-data" class="p-6 space-y-6">
-                            @csrf
-
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Judul Laporan</label>
-                                <input type="text" name="judul" required
-                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl">
-                            </div>
-
-                            <div class="grid md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Tanggal Kejadian</label>
-                                    <input type="date" name="tanggal" required
-                                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Kategori</label>
-                                    <select name="id_kategori" required
-                                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl">
-                                        <option value="">-- Pilih Kategori --</option>
-                                        @foreach ($kategori as $k)
-                                            <option value="{{ $k->id }}">{{ $k->nama_kategori }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Lokasi Kejadian</label>
-                                <input type="text" name="alamat" required
-                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl">
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Kronologi / Deskripsi</label>
-                                <textarea name="deskripsi" rows="5" required
-                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl"></textarea>
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Bukti Pendukung</label>
-                                <input type="file" name="bukti[]" multiple accept="image/*,video/mp4"
-                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl">
-                            </div>
-
-                            <button id="btn-submit-lapor" type="submit"
-                                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl">
-                                <i class='bx bx-send text-xl'></i> Kirim Laporan
-                            </button>
-                        </form>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    @endauth
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('form-laporan-modal');
-            const btnSubmit = document.getElementById('btn-submit-lapor');
-            const msgBox = document.getElementById('msg-modal');
-
-            if (!form) return;
-
-            const showMsg = (type, text) => {
-                msgBox.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100',
-                    'text-red-700');
-                if (type === 'success') msgBox.classList.add('bg-green-100', 'text-green-700');
-                else msgBox.classList.add('bg-red-100', 'text-red-700');
-                msgBox.innerText = text;
-            };
-
-            const resetMsg = () => {
-                msgBox.classList.add('hidden');
-                msgBox.innerText = '';
-            };
-
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                resetMsg();
-
-                btnSubmit.disabled = true;
-                const oldBtn = btnSubmit.innerHTML;
-                btnSubmit.innerHTML = 'Mengirim...';
-
-                try {
-                    const res = await fetch('/laporan', {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Accept': 'application/json'
-                        },
-                        body: new FormData(form)
-                    });
-
-                    const data = await res.json().catch(() => ({}));
-
-                    if (res.status === 422) {
-                        const errors = data.errors || {};
-                        const firstKey = Object.keys(errors)[0];
-                        const firstMsg = firstKey ? errors[firstKey][0] : 'Input tidak valid';
-                        showMsg('error', firstMsg);
-                        return;
-                    }
-
-                    if (!res.ok) {
-                        showMsg('error', data.message || 'Gagal menyimpan laporan');
-                        return;
-                    }
-
-                    if (data.success === false) {
-                        showMsg('error', data.message || 'Gagal menyimpan laporan');
-                        return;
-                    }
-
-                    showMsg('success', data.message || 'Laporan tersimpan');
-                    form.reset();
-
-                } catch (err) {
-                    showMsg('error', 'Koneksi gagal');
-                } finally {
-                    btnSubmit.disabled = false;
-                    btnSubmit.innerHTML = oldBtn;
-                }
-            });
-        });
-    </script>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById('modal-lapor');
-            const btnOpen = document.getElementById('btn-open-lapor');
-            const btnOpen2 = document.getElementById('btn-open-lapor-2');
-            const btnClose = document.getElementById('btn-close-lapor');
-            const backdrop = document.getElementById('modal-backdrop');
-
-            if (!modal) return;
-
-            const openModal = () => modal.classList.remove('hidden');
-            const closeModal = () => modal.classList.add('hidden');
-
-            if (btnOpen) btnOpen.addEventListener('click', openModal);
-            if (btnOpen2) btnOpen2.addEventListener('click', openModal);
-            if (btnClose) btnClose.addEventListener('click', closeModal);
-            if (backdrop) backdrop.addEventListener('click', closeModal);
-        });
-    </script>
+    <x-laporan-modal :kategori="$kategori" />
+@push('scripts')
+<script src="{{ asset('js/pages/home.js') }}"></script>
+@endpush
 
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1 // Elemen muncul ketika 10% bagiannya terlihat
-            };
+document.addEventListener('DOMContentLoaded', function () {
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
 
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target); // Animasi hanya berjalan sekali
-                    }
-                });
-            }, observerOptions);
-
-            const elements = document.querySelectorAll('.reveal-on-scroll');
-            elements.forEach(el => observer.observe(el));
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            }
         });
-    </script>
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal-on-scroll')
+        .forEach(el => observer.observe(el));
+});
+</script>
+
 
 </x-layouts.app>
