@@ -1,18 +1,19 @@
-<nav x-data="{ scrolled: false, mobileOpen: false }"
+<nav x-data="{ scrolled: false, mobileOpen: false }" 
      @scroll.window="scrolled = (window.pageYOffset > 20)"
      class="fixed w-full z-50 top-0 transition-all duration-300 border-b border-transparent"
      :class="scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm border-slate-200 py-3' : 'bg-white py-5 shadow-sm'">
-
+    
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-14">
-
+            
             <a href="{{ Auth::check() && Auth::user()->role === 'admin' ? '/dashboard' : '/home' }}" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-200 group-hover:scale-110 transition">
-                    <i class='bx bx-shield-exclamation text-2xl'></i>
-                </div>
-                <div class="leading-tight">
-                    <div class="font-bold text-xl text-slate-800 tracking-tight group-hover:text-blue-600 transition">ANPUNDUNG</div>
-                    <div class="text-[10px] font-bold text-blue-600 tracking-widest uppercase">Anti Pungli Bandung</div>
+                <img src="{{ asset('img/logo-anpundung.png') }}" 
+                    alt="Logo AnnPundung" 
+                    class="h-12 w-12 object-contain transition-transform duration-300 drop-shadow-sm max-h-[80px]">
+
+                <div class="flex flex-col justify-center leading-none">
+                    <span class="font-bold text-xl text-slate-800 tracking-tight">ANPUNDUNG</span>
+                    <span class="text-[8px] font-bold text-blue-600 tracking-widest uppercase">Anti Pungli Kota Bandung</span>
                 </div>
             </a>
 
@@ -27,7 +28,7 @@
                     @else
                         <x-nav-link href="/home" icon="bxs-home" active="{{ request()->is('home') }}">Home</x-nav-link>
                         <x-nav-link href="/edukasi" icon="bxs-book" active="{{ request()->is('edukasi') }}">Edukasi</x-nav-link>
-                        <x-nav-link href="/riwayat" icon="bxs-news" active="{{ request()->is('berita') }}">Riwayat</x-nav-link>
+                        <x-nav-link href="/berita" icon="bxs-news" active="{{ request()->is('berita') }}">Berita</x-nav-link>
                         <x-nav-link href="/kontak" icon="bxs-message" active="{{ request()->is('kontak') }}">Kontak</x-nav-link>
                     @endif
 
@@ -42,7 +43,7 @@
                             </div>
                         </button>
 
-                        <div x-show="open" @click.away="open = false"
+                        <div x-show="open" @click.away="open = false" 
                              class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 border border-slate-100 z-50 transform origin-top-right transition-all"
                              style="display: none;">
                             <a href="/profile" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition">

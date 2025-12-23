@@ -84,8 +84,9 @@
                         </a>
                     @endauth
 
-                    <a href="#tentang"
-                        class="px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/30 text-white font-bold rounded-full backdrop-blur-md transition-all hover:scale-105 flex items-center gap-2">
+                    <a href="#tentang" 
+                    onclick="document.getElementById('tentang').scrollIntoView({ behavior: 'smooth' }); return false;"
+                    class="px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/30 text-white font-bold rounded-full backdrop-blur-md transition-all hover:scale-105 flex items-center gap-2 scroll cursor-pointer">
                         <i class='bx bx-info-circle text-xl'></i> Pelajari
                     </a>
                 </div>
@@ -127,7 +128,7 @@
         </div>
     </div>
 
-    <section id="tentang" class="py-12 max-w-6xl mx-auto px-4 mb-24">
+    <section id="tentang" class="max-w-7xl mx-auto px-4 mb-32">
         <div class="flex flex-col lg:flex-row items-center gap-16">
             <div class="lg:w-1/2 reveal-on-scroll">
                 <div
