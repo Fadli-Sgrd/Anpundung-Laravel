@@ -32,8 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/riwayat', [PageController::class, 'riwayat'])->name('riwayat');
     Route::get('/profile', [PageController::class, 'profile'])->name('profile');
     Route::patch('/profile/update', [PageController::class, 'updateProfile'])->name('profile.update');
-    Route::get('/edukasi', function () {
-        return view('pages.edukasi');
-    })->name('edukasi');
+   Route::get('/edukasi', [PageController::class, 'edukasi'])->name('edukasi');
+
 });
 

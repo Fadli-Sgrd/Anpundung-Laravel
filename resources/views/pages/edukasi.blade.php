@@ -1,10 +1,10 @@
 <x-layouts.app title="Edukasi - Pencegahan Pungli">
     <div class="max-w-5xl mx-auto">
-        
+
         <div class="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-blue-600 to-slate-900 text-white shadow-2xl shadow-blue-200 mb-16 p-10 md:p-20 text-center">
             <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full bg-white opacity-5 blur-3xl"></div>
             <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-60 h-60 rounded-full bg-blue-400 opacity-10 blur-3xl"></div>
-            
+
             <div class="relative z-10">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-blue-100 text-xs font-bold uppercase tracking-wider mb-6 backdrop-blur-sm">
                     <i class='bx bxs-book-open'></i> Pusat Pengetahuan
@@ -74,10 +74,10 @@
 
         <div class="bg-blue-50 rounded-[2.5rem] p-8 md:p-16 mb-16 relative overflow-hidden">
             <i class='bx bxs-shield-check absolute -right-10 -bottom-10 text-[15rem] text-blue-100 opacity-50 rotate-12'></i>
-            
+
             <div class="relative z-10">
                 <h2 class="text-3xl font-bold text-slate-800 mb-8">Langkah Pencegahan</h2>
-                
+
                 <div class="space-y-6">
                     <div class="flex items-start gap-4 bg-white p-5 rounded-2xl shadow-sm border border-blue-100">
                         <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold shrink-0">1</div>
@@ -122,16 +122,28 @@
             <p class="text-slate-600 mb-8 max-w-2xl mx-auto">
                 Diam berarti membiarkan praktik ini terus terjadi. Keberanian Anda melapor adalah kunci perubahan untuk Bandung yang lebih bersih.
             </p>
-            @auth
-                <a href="/laporan/create" class="inline-block px-8 py-4 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-700 transition shadow-lg shadow-orange-200">
-                    Laporkan Pungli Sekarang
-                </a>
-            @else
-                <a href="/register" class="inline-block px-8 py-4 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-700 transition shadow-lg shadow-orange-200">
-                    Daftar untuk Melapor
-                </a>
-            @endauth
-        </div>
+          @auth
+  <button type="button"
+    class="inline-block px-8 py-4 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-700 transition shadow-lg shadow-orange-200 js-open-lapor">
+    Laporkan Pungli Sekarang
+  </button>
+@else
+  <a href="/register" class="inline-block px-8 py-4 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-700 transition shadow-lg shadow-orange-200">
+    Daftar untuk Melapor
+  </a>
+@endauth
 
-    </div>
+
+</div>
+
+</div>
+<x-laporan-modal :kategori="$kategori" />
+
+
+@push('scripts')
+  <script src="{{ asset('js/pages/edukasi.js') }}"></script>
+@endpush
+
+
+
 </x-layouts.app>

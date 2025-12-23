@@ -24,7 +24,8 @@ class PageController extends Controller
      */
     public function edukasi()
     {
-        return view('pages.edukasi');
+     $kategori = Kategori::all();
+        return view('pages.edukasi', compact('kategori'));
     }
 
     /**
