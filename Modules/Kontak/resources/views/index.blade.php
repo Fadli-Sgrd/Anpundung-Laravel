@@ -25,7 +25,7 @@
                                     <i class='bx bxs-map text-xl'></i>
                                 </div>
                                 <div>
-                                    <p class="font-bold text-blue-100 text-sm mb-1">Sekretariat RW 14</p>
+                                    <p class="font-bold text-blue-100 text-sm mb-1">Porles Jawa Barat</p>
                                     <p class="text-xs opacity-80 leading-relaxed">Bandung, Jawa Barat<br>Indonesia</p>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                                 </div>
                                 <div>
                                     <p class="font-bold text-blue-100 text-sm mb-1">Email Resmi</p>
-                                    <p class="text-xs opacity-80">help@anpundung.id</p>
+                                    <p class="text-xs opacity-80">anpundung@gmail.com</p>
                                 </div>
                             </div>
                         </div>
