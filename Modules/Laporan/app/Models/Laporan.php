@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Laporan\Database\Factories\LaporanFactory;
 
 class Laporan extends Model
 {
@@ -44,10 +43,5 @@ class Laporan extends Model
     public function bukti(): HasMany
     {
         return $this->hasMany(Bukti::class, 'kode_laporan', 'kode_laporan');
-    }
-
-    protected static function newFactory()
-    {
-        return LaporanFactory::new();
     }
 }
