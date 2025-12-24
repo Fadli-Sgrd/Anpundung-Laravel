@@ -36,4 +36,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/edukasi', [PageController::class, 'edukasi'])->name('edukasi');
     Route::get('/berita', [NewsController::class, 'index'])->name('news.index');
     Route::get('/berita/{slug}', [NewsController::class, 'show'])->name('news.show');
+
+    // ==================== ADMIN NEWS ROUTES ====================
+    Route::middleware('is_admin')->prefix('admin')->group(function () {
+        Route::get('/berita', [NewsController::class, 'adminIndex'])->name('admin.news.index');
+        Route::get('/berita/create', [NewsController::class, 'create'])->name('admin.news.create');
+        Route::post('/berita', [NewsController::class, 'store'])->name('admin.news.store');
+        Route::get('/berita/{id}/edit', [NewsController::class, 'edit'])->name('admin.news.edit');
+        Route::put('/berita/{id}', [NewsController::class, 'update'])->name('admin.news.update');
+        Route::delete('/berita/{id}', [NewsController::class, 'destroy'])->name('admin.news.destroy');
+    });
 });

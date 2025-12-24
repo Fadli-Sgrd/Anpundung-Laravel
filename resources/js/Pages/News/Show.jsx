@@ -1,11 +1,21 @@
 import { Head, Link } from "@inertiajs/react";
 
-export default function NewsShow({ news, related_news, page_title }) {
+export default function NewsShow({ news, page_title }) {
+    // Controller passing 'related' inside 'news' object, or as separate prop?
+    // Based on controller, it seems 'related' is inside 'news' object in my last edit, 
+    // BUT checking Show.jsx original code it expects 'related_news' prop.
+    // Let's check keys.
+    
+    // Controller logic:
+    // 'news' => [ ..., 'related' => [...] ]
+    
+    const relatedNews = news.related || [];
+
     return (
         <>
             <Head title={page_title} />
 
-            <article className="container mx-auto px-4 py-8 max-w-4xl">
+            <article className="w-full max-w-4xl mx-auto px-4 py-8">
                 {/* Breadcrumb */}
                 <nav className="text-sm text-gray-500 mb-6">
                     <Link
@@ -41,56 +51,50 @@ export default function NewsShow({ news, related_news, page_title }) {
                         <img
                             src={news.image}
                             alt={news.title}
-                            className="w-full h-auto rounded-lg shadow-lg"
+                            className="w-full h-[400px] object-cover rounded-lg shadow-lg"
                         />
                     </div>
                 )}
 
                 {/* Content */}
-                <div
-                    className="prose prose-lg max-w-none mb-12"
-                    dangerouslySetInnerHTML={{ __html: news.content }}
-                />
-
-                {/* Divider */}
-                <hr className="my-12 border-gray-300" />
+                <div className="prose prose-lg max-w-none mb-12">
+                    <div dangerouslySetInnerHTML={{ __html: news.content }} />
+                </div>
 
                 {/* Related News */}
-                {related_news.length > 0 && (
-                    <section>
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6">
+                {relatedNews.length > 0 && (
+                    <section className="border-t border-gray-200 pt-8">
+                        <h2 className="text-2xl font-bold text-gray-900 mb-6">
                             Berita Terkait
                         </h2>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {related_news.map((item) => (
+                        <div className="grid md:grid-cols-3 gap-6">
+                            {relatedNews.map((item, index) => (
                                 <Link
-                                    key={item.id}
+                                    key={index}
                                     href={route("news.show", item.slug)}
-                                    className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+                                    className="group"
                                 >
                                     {item.image && (
-                                        <img
-                                            src={item.image}
-                                            alt={item.title}
-                                            className="w-full h-40 object-cover"
-                                        />
+                                        <div className="overflow-hidden rounded-lg mb-3">
+                                            <img
+                                                src={item.image}
+                                                alt={item.title}
+                                                className="w-full h-40 object-cover group-hover:scale-105 transition duration-300"
+                                            />
+                                        </div>
                                     )}
-
-                                    <div className="p-4">
-                                        <p className="text-sm text-gray-500 mb-2">
-                                            {item.published_at}
-                                        </p>
-                                        <h3 className="font-semibold text-gray-800 line-clamp-2 hover:text-blue-600">
-                                            {item.title}
-                                        </h3>
-                                    </div>
+                                    <h3 className="font-semibold text-gray-900 group-hover:text-blue-600 transition">
+                                        {item.title}
+                                    </h3>
+                                    <p className="text-sm text-gray-500 mt-1">
+                                        {item.published_at}
+                                    </p>
                                 </Link>
                             ))}
                         </div>
                     </section>
                 )}
-
+            
                 {/* Back to List */}
                 <div className="mt-12 text-center">
                     <Link
