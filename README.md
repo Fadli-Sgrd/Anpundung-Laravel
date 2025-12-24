@@ -59,6 +59,8 @@ resources/
 routes/
 └── web.php
 
+---
+
 ## 🚀 Instalasi & Menjalankan Project
 
 git clone https://github.com/username/anpundung.git
@@ -71,16 +73,22 @@ php artisan migrate
 npm run dev
 php artisan serve
 
+---
+
 🔐 Hak Akses
 
 Akses halaman dashboard dan manajemen berita dibatasi untuk admin
 
 User umum hanya dapat mengakses halaman publik
 
+---
+
 📄 Lisensi
 
 Project ini dikembangkan untuk keperluan akademik dan pembelajaran.
 Penggunaan di luar konteks tersebut menjadi tanggung jawab masing-masing pihak.
+
+---
 
 ✍️ Author
 
