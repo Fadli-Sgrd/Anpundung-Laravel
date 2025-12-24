@@ -56,4 +56,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Laporan::class, 'user_id', 'id');
     }
+
+    /**
+     * Get news created by user
+     */
+    public function news(): HasMany
+    {
+        return $this->hasMany(News::class);
+    }
 }

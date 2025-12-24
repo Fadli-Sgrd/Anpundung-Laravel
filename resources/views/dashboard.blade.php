@@ -98,6 +98,17 @@
                                     Kategori Laporan</h4>
                                 <p class="text-sm text-slate-500">Tambah atau edit jenis pelanggaran pungli.</p>
                             </a>
+
+                            <a href="{{ route('admin.news.index') }}"
+                                class="group bg-white p-6 rounded-2xl border border-slate-200 hover:border-blue-500 hover:ring-1 hover:ring-blue-500 transition cursor-pointer">
+                                <div
+                                    class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                                    <i class='bx bxs-news'></i>
+                                </div>
+                                <h4 class="font-bold text-slate-800 mb-1 group-hover:text-emerald-600 transition">
+                                    Kelola Berita</h4>
+                                <p class="text-sm text-slate-500">Buat, edit, atau hapus berita dan artikel.</p>
+                            </a>
                         </div>
                     </div>
                 </div>

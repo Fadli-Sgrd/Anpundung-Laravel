@@ -16,7 +16,7 @@ class News extends Model
         'excerpt',
         'content',
         'image',
-        'author',
+        'user_id',
         'published_at',
         'is_published',
     ];
@@ -25,6 +25,11 @@ class News extends Model
         'published_at' => 'datetime',
         'is_published' => 'boolean',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     // Auto generate slug dari title
     protected static function boot()
