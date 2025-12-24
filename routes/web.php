@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return redirect('/home');
@@ -32,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/riwayat', [PageController::class, 'riwayat'])->name('riwayat');
     Route::get('/profile', [PageController::class, 'profile'])->name('profile');
     Route::patch('/profile/update', [PageController::class, 'updateProfile'])->name('profile.update');
-   Route::get('/edukasi', [PageController::class, 'edukasi'])->name('edukasi');
-
+    Route::get('/edukasi', [PageController::class, 'edukasi'])->name('edukasi');
+    Route::get('/berita', [NewsController::class, 'index'])->name('news.index');
+    Route::get('/berita/{slug}', [NewsController::class, 'show'])->name('news.show');
 });
-

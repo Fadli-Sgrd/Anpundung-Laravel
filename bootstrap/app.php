@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'is_admin' => \App\Http\Middleware\IsAdmin::class,
             'api_auth' => \App\Http\Middleware\ApiAuth::class,
         ]);
+        $middleware->web(append: [
+            \App\Http\Middleware\HandleInertiaRequests::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
