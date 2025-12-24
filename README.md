@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="public/logo-anpundung.png" width="180" alt="Anpundung Logo">
-</p>
-
 <h1 align="center">ANPUNDUNG</h1>
 
 <p align="center">
@@ -51,3 +47,43 @@ Aplikasi ini membedakan **hak akses pengguna**:
 
 ## 🗂️ Struktur Umum Proyek
 
+app/
+└── Http/Controllers
+resources/
+└── js/Pages
+└── Berita
+├── Index.jsx
+├── Create.jsx
+├── Edit.jsx
+└── Show.jsx
+routes/
+└── web.php
+
+## 🚀 Instalasi & Menjalankan Project
+
+git clone https://github.com/username/anpundung.git
+cd anpundung
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+npm run dev
+php artisan serve
+
+🔐 Hak Akses
+
+Akses halaman dashboard dan manajemen berita dibatasi untuk admin
+
+User umum hanya dapat mengakses halaman publik
+
+📄 Lisensi
+
+Project ini dikembangkan untuk keperluan akademik dan pembelajaran.
+Penggunaan di luar konteks tersebut menjadi tanggung jawab masing-masing pihak.
+
+✍️ Author
+
+Anpundung Team
+Mahasiswa D4 Sistem Informasi Kota Cerdas
+Universitas Telkom
