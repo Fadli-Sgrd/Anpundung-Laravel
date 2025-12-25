@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Modules\Kategori\Models\Kategori;
 use Modules\Bukti\Models\Bukti;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class LaporanController extends Controller
 {
@@ -24,7 +25,10 @@ class LaporanController extends Controller
                 ->get();
         }
 
-        return view('laporan::index', compact('laporan'));
+
+
+        $kategori = Kategori::all();
+        return Inertia::render('Laporan/Index', compact('laporan', 'kategori'));
     }
 
 
@@ -80,10 +84,14 @@ class LaporanController extends Controller
             }
         }
 
-        return response()->json([
-            'success' => true,
-            'kode_laporan' => $laporan->kode_laporan
-        ]);
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'kode_laporan' => $laporan->kode_laporan
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Laporan berhasil dikirim!');
     }
 
     /**
@@ -129,6 +137,59 @@ class LaporanController extends Controller
         return redirect()->back()->with('success', 'Status laporan diperbarui');
     }
 
+
+    /**
+     * Update laporan
+     */
+    public function update(Request $request, $kode_laporan)
+    {
+        $laporan = Laporan::where('kode_laporan', $kode_laporan)->firstOrFail();
+
+        // Check auth
+        if (Auth::user()->id !== $laporan->user_id && Auth::user()->role !== 'admin') {
+            abort(403, 'Unauthorized');
+        }
+
+        // Only allow update if pending
+        if ($laporan->status_tindakan !== 'Pending') {
+             return redirect()->back()->withErrors(['Laporan tidak dapat diedit karena sudah diproses.']);
+        }
+
+        $request->validate([
+            'judul'        => 'required|string|max:255',
+            'tanggal'      => 'required|date',
+            'alamat'       => 'required|string',
+            'deskripsi'    => 'required|string',
+            'id_kategori'  => 'required|exists:kategori_laporan,id',
+            'bukti.*'      => 'nullable|file|mimes:jpg,jpeg,png,mp4|max:5120',
+        ]);
+
+        $laporan->update([
+            'judul'           => $request->judul,
+            'tanggal'         => $request->tanggal,
+            'alamat'          => $request->alamat,
+            'deskripsi'       => $request->deskripsi,
+            'id_kategori'     => $request->id_kategori,
+        ]);
+
+        // Handle uploaded bukti files (add new ones)
+        if ($request->hasFile('bukti')) {
+            $files = $request->file('bukti');
+            foreach ($files as $file) {
+                if (!$file->isValid()) continue;
+                $path = $file->store('bukti', 'public');
+
+                Bukti::create([
+                    'kode_laporan' => $laporan->kode_laporan,
+                    'jenis'        => $file->getClientOriginalExtension() === 'mp4' ? 'Video' : 'Gambar',
+                    'path_file'    => $path,
+                    'deskripsi'    => null,
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Laporan berhasil diperbarui!');
+    }
 
     /**
      * Hapus laporan

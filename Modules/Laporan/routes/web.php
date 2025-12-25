@@ -10,6 +10,7 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('/laporan/create', [LaporanController::class, 'create']);
     Route::post('/laporan', [LaporanController::class, 'store']);
     Route::get('/laporan/{kode_laporan}', [LaporanController::class, 'show']);
+    Route::put('/laporan/{kode_laporan}', [LaporanController::class, 'update']); // Add this for Edit functionality
 
     // Admin actions (controller will enforce admin check)
     Route::patch('/laporan/{kode_laporan}/status', [LaporanController::class, 'updateStatus']);

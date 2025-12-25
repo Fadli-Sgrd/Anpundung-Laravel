@@ -6,13 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Modules\Kontak\Models\Kontak;
 use Modules\Kategori\Models\Kategori; // ini yang kurang
+use Inertia\Inertia;
 
 class KontakController extends Controller
 {
     public function index()
     {
         $kategori = Kategori::all();
-        return view('kontak::index', compact('kategori'));
+        return Inertia::render('Kontak', compact('kategori'));
     }
 
     public function store(Request $request)

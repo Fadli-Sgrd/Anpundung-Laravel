@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Modules\Laporan\Models\Laporan;
 use Illuminate\Support\Facades\Auth;
 use Modules\Kategori\Models\Kategori;
+use Inertia\Inertia;
 
 
 class PageController extends Controller
@@ -16,7 +17,7 @@ class PageController extends Controller
     public function home()
     {
          $kategori = Kategori::all();
-        return view('pages.home', compact('kategori'));
+        return Inertia::render('Home', compact('kategori'));
     }
 
     /**
@@ -25,7 +26,7 @@ class PageController extends Controller
     public function edukasi()
     {
      $kategori = Kategori::all();
-        return view('pages.edukasi', compact('kategori'));
+        return Inertia::render('Edukasi', compact('kategori'));
     }
 
     /**
