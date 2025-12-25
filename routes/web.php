@@ -6,6 +6,8 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use Modules\Kontak\Http\Controllers\KontakController;
+
 
 Route::get('/', function () {
     return redirect('/home');
@@ -32,6 +34,7 @@ Route::middleware('guest')->group(function () {
     
     // 4. Proses update password baru ke database
     Route::post('/reset-password', [App\Http\Controllers\ForgotPasswordController::class, 'reset'])->name('password.update');
+    
 });
 
 Route::middleware('auth')->group(function () {
@@ -58,5 +61,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/berita/{id}/edit', [NewsController::class, 'edit'])->name('admin.news.edit');
         Route::put('/berita/{id}', [NewsController::class, 'update'])->name('admin.news.update');
         Route::delete('/berita/{id}', [NewsController::class, 'destroy'])->name('admin.news.destroy');
+
+        // Pesan Kontak
+        Route::get('/pesan', [KontakController::class, 'adminIndex'])->name('admin.pesan.index');
+        Route::delete('/pesan/{id}', [KontakController::class, 'destroy'])->name('admin.pesan.destroy');
     });
 });
