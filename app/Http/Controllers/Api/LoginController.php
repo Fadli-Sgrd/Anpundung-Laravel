@@ -31,8 +31,13 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
+            /** @var \App\Models\User $user */
             $user = Auth::user();
-
+            $tokenBaru = bin2hex(random_bytes(40));
+            
+            $user->api_token = $tokenBaru;
+            $user->save();
+             
             return response()->json([
                 'status'  => true,
                 'message' => 'Login Berhasil',
@@ -41,7 +46,7 @@ class LoginController extends Controller
                     'nama'  => $user->name,
                     'email' => $user->email,
                     'role'  => $user->role,
-                    'token' => $user->api_token,
+                    'token' => $tokenBaru,
                 ]
             ], 200);
         }
@@ -49,6 +54,28 @@ class LoginController extends Controller
         return response()->json([
             'status'  => false,
             'message' => 'Email atau Password salah',
+        ], 401);
+    }
+
+    public function logout(Request $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if ($user) {
+            // Hapus token di database (Set jadi NULL)
+            $user->api_token = null;
+            $user->save();
+
+            return response()->json([
+                'status'  => true,
+                'message' => 'Logout Berhasil',
+            ], 200);
+        }
+
+        return response()->json([
+            'status'  => false,
+            'message' => 'Gagal Logout',
         ], 401);
     }
 }
