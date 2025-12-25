@@ -55,8 +55,6 @@
         <x-footer />
     @endif
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="{{ asset('js/app-jq.js') }}"></script>
     @stack('scripts')
 </body>
 

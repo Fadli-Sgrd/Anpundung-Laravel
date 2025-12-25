@@ -1,15 +1,7 @@
 import { Head, Link, usePage } from "@inertiajs/react";
 
 export default function NewsShow({ news, page_title }) {
-    const { auth } = usePage().props;
-    // Controller passing 'related' inside 'news' object, or as separate prop?
-    // Based on controller, it seems 'related' is inside 'news' object in my last edit, 
-    // BUT checking Show.jsx original code it expects 'related_news' prop.
-    // Let's check keys.
-    
-    // Controller logic:
-    // 'news' => [ ..., 'related' => [...] ]
-    
+    const { auth } = usePage().props;    
     const relatedNews = news.related || [];
 
     const backRoute = auth.user && auth.user.role === 'admin' 
