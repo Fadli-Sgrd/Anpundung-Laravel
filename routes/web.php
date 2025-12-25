@@ -14,11 +14,24 @@ Route::get('/', function () {
 // ==================== AUTH ROUTES ====================
 
 Route::middleware('guest')->group(function () {
+    // LOGIN & REGISTER 
     Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
-
     Route::get('/register', [AuthController::class, 'registerForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
+
+    // lupa password
+    // 1. Tampilkan form lupa password
+    Route::get('/forgot-password', [App\Http\Controllers\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    
+    // 2. Proses kirim link ke email
+    Route::post('/forgot-password', [App\Http\Controllers\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    
+    // 3. Tampilkan form ganti password baru (setelah klik link di email)
+    Route::get('/reset-password/{token}', [App\Http\Controllers\ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+    
+    // 4. Proses update password baru ke database
+    Route::post('/reset-password', [App\Http\Controllers\ForgotPasswordController::class, 'reset'])->name('password.update');
 });
 
 Route::middleware('auth')->group(function () {
