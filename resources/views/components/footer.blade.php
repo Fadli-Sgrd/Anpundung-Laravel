@@ -7,7 +7,7 @@
                     <span class="font-bold text-xl">ANPUNDUNG</span>
                 </div>
                 <p class="text-sm text-slate-400 max-w-sm leading-relaxed">
-                    Sistem pelaporan Pungutan Liar (Pungli) terpercaya untuk RW 14 Bandung. Bersama ciptakan lingkungan yang bersih dan transparan.
+                    Sistem pelaporan Pungutan Liar (Pungli) terpercaya untuk semua warga Bandung. Bersama ciptakan lingkungan yang bersih dan transparan.
                 </p>
             </div>
 
