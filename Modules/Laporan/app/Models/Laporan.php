@@ -49,4 +49,7 @@ class Laporan extends Model
     {
         return $this->hasMany(Bukti::class, 'kode_laporan', 'kode_laporan');
     }
+
+    
+
 }
