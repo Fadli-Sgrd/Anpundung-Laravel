@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\News;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
 {
@@ -124,7 +125,7 @@ class NewsController extends Controller
         }
 
         // Assign user_id dari user yang login
-        $validated['user_id'] = auth()->id();
+        $validated['user_id'] = Auth::id();
 
         News::create($validated);
 
