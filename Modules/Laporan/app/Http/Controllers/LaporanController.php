@@ -10,9 +10,12 @@ use Modules\Kategori\Models\Kategori;
 use Modules\Bukti\Models\Bukti;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class LaporanController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
         // Admin sees all reports; regular users see only their own
@@ -115,26 +118,24 @@ class LaporanController extends Controller
 
 
     /**
-     * Update status laporan (admin)
+     * Update status laporan (admin only)
      */
     public function updateStatus(Request $request, $kode_laporan)
     {
-        if (!Auth::check() || Auth::user()->role !== 'admin') {
-            abort(403, 'Unauthorized. Admin only.');
-        }
+        $laporan = Laporan::where('kode_laporan', $kode_laporan)->firstOrFail();
+        
+        // Authorize using policy
+        $this->authorize('updateStatus', $laporan);
 
         $request->validate([
             'status_tindakan' => 'required|in:Pending,Proses,Selesai,Ditolak'
         ]);
 
-
-        $laporan = Laporan::where('kode_laporan', $kode_laporan)->firstOrFail();
         $laporan->update([
             'status_tindakan' => $request->status_tindakan
         ]);
 
-
-        return redirect()->back()->with('success', 'Status laporan diperbarui');
+        return redirect()->back()->with('success', 'Status laporan berhasil diperbarui menjadi ' . $request->status_tindakan);
     }
 
 
