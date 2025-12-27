@@ -49,7 +49,7 @@ class AuthController extends Controller
      */
     public function registerForm()
     {
-        return view('auth.register');
+        return view('auth.login');
     }
 
     /**
@@ -86,6 +86,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login')->with('success', 'Logout berhasil');
+        return redirect('/home')->with('success', 'Logout berhasil');
     }
 }
