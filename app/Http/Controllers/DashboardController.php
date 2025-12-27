@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Modules\Laporan\Models\Laporan;
+use Modules\Kontak\Models\Kontak;
 
 class DashboardController extends Controller
 {
@@ -26,13 +27,17 @@ class DashboardController extends Controller
         // 3. Data untuk Grafik - Status Laporan (Pie Chart)
         $statusData = $this->getStatusData();
 
-        // 4. Kirim Data ke View (Agar bisa dipanggil pakai {{ $nama_variabel }})
+        // 4. Total Pesan Kontak Masuk
+        $totalPesan = Kontak::count();
+
+        // 5. Kirim Data ke View (Agar bisa dipanggil pakai {{ $nama_variabel }})
         return view('dashboard', compact(
             'totalLaporan',
             'laporanPending',
             'laporanSelesai',
             'trendLaporan',
-            'statusData'
+            'statusData',
+            'totalPesan'
         ));
     }
 

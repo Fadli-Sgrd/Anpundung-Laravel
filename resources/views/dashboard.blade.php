@@ -57,8 +57,7 @@
                         </div>
                         <p class="text-slate-500 text-sm font-bold">Selesai</p>
                     </div>
-                    <span
-                        class="px-2 py-1 bg-emerald-100 text-emerald-600 text-xs font-bold rounded-md">Verified</span>
+                    <span class="px-2 py-1 bg-emerald-100 text-emerald-600 text-xs font-bold rounded-md">Verified</span>
                 </div>
                 <h2 class="text-3xl font-extrabold text-slate-800">{{ $laporanSelesai }}</h2>
             </div>
@@ -129,6 +128,19 @@
                             <h4 class="font-bold text-slate-800 mb-1 group-hover:text-emerald-600 transition">
                                 Kelola Berita</h4>
                             <p class="text-sm text-slate-500">Buat, edit, atau hapus berita dan artikel.</p>
+                        </a>
+
+                        <a href="{{ route('admin.pesan.index') }}"
+                            class="group bg-white p-6 rounded-2xl border border-slate-200 hover:border-blue-500 hover:ring-1 hover:ring-blue-500 transition cursor-pointer">
+                            <div
+                                class="w-12 h-12 bg-pink-50 text-pink-600 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                                <i class='bx bxs-envelope'></i>
+                            </div>
+                            <h4 class="font-bold text-slate-800 mb-1 group-hover:text-pink-600 transition">
+                                Pesan Masuk <span
+                                    class="ml-1 px-2 py-0.5 bg-pink-100 text-pink-600 text-xs rounded-full">{{ $totalPesan }}</span>
+                            </h4>
+                            <p class="text-sm text-slate-500">Lihat pesan dari form kontak pengunjung.</p>
                         </a>
                     </div>
                 </div>
