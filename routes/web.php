@@ -10,8 +10,18 @@ use Modules\Kontak\Http\Controllers\KontakController;
 
 
 Route::get('/', function () {
-    return redirect('/home');
+    if (Auth::check()) {
+        return Auth::user()->role === 'admin' ? redirect('/dashboard') : redirect('/home');
+    }
+    return redirect('/home'); // Guest goes to home
 });
+
+// Root home route accessible by anyone
+Route::get('/home', [PageController::class, 'home'])->name('home');
+Route::get('/edukasi', [PageController::class, 'edukasi'])->name('edukasi');
+Route::get('/berita', [NewsController::class, 'index'])->name('news.index');
+Route::get('/berita/{slug}', [NewsController::class, 'show'])->name('news.show');
+
 
 // ==================== TEST EMAIL ====================
 Route::get('/test-email', function () {
@@ -55,14 +65,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('is_admin');
 
     // ==================== PAGE ROUTES ====================
-    Route::get('/home', [PageController::class, 'home'])->name('home');
-    Route::redirect('/edukasi', '/home'); // Edukasi content merged into home
     Route::get('/riwayat', [PageController::class, 'riwayat'])->name('riwayat');
     Route::get('/profile', [PageController::class, 'profile'])->name('profile');
     Route::patch('/profile/update', [PageController::class, 'updateProfile'])->name('profile.update');
-    Route::get('/edukasi', [PageController::class, 'edukasi'])->name('edukasi');
-    Route::get('/berita', [NewsController::class, 'index'])->name('news.index');
-    Route::get('/berita/{slug}', [NewsController::class, 'show'])->name('news.show');
+
 
     // ==================== ADMIN NEWS ROUTES ====================
     Route::middleware('is_admin')->prefix('admin')->group(function () {

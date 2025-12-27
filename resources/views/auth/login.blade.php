@@ -115,7 +115,7 @@
                     </div>
 
                     <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 transition-all transform hover:-translate-y-0.5 active:scale-95 flex justify-center items-center gap-2 mt-4">
-                        Masuk Dashboard
+                        Masuk
                         <i class='bx bx-right-arrow-alt text-xl'></i>
                     </button>
                     
@@ -133,7 +133,7 @@
                     
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-2">Nama Lengkap</label>
-                        <input type="text" name="name" class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-400 font-medium" placeholder="Sesuai KTP" required>
+                        <input type="text" name="name" class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-400 font-medium" placeholder="Contoh: John Doe" required>
                     </div>
 
                     <div>
@@ -147,7 +147,7 @@
                             <input type="password" name="password" class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-400 font-medium" placeholder="Min 8 Karakter" required>
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Ulangi Password</label>
+                            <label class="block text-sm font-bold text-slate-700 mb-2">Konfirmasi Password</label>
                             <input type="password" name="password_confirmation" class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-400 font-medium" placeholder="Samakan" required>
                         </div>
                     </div>

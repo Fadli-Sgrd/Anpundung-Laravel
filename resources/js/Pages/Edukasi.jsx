@@ -51,7 +51,7 @@ export default function Edukasi({ kategori }) {
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:border-blue-200 transition group">
                             <div className="w-12 h-12 bg-red-50 text-red-500 rounded-xl flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition">
-                                <i className='bx bxs-file-remove'></i>
+                                <i className='bx bx-file'></i>
                             </div>
                             <h3 className="font-bold text-xl text-slate-800 mb-3 group-hover:text-blue-600 transition">Tidak Ada Bukti Resmi</h3>
                             <p className="text-slate-500 leading-relaxed">Petugas menolak memberikan kwitansi resmi, karcis, atau dokumen sah lainnya sebagai bukti pembayaran.</p>

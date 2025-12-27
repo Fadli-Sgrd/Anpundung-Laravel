@@ -86,7 +86,7 @@ export default function Home({ kategori }) {
                             className={`transition-all duration-1000 ease-out transform translate-y-10 opacity-0 ${loaded ? '!translate-y-0 !opacity-100' : ''}`}
                         >
                             <span className="inline-block py-2 px-6 rounded-full bg-white/10 border border-white/20 text-blue-100 text-xs font-bold tracking-[0.3em] uppercase mb-8 backdrop-blur-md shadow-2xl">
-                                Official Platform Annpundung
+                                Official Platform Anpundung
                             </span>
                         </div>
 
@@ -94,7 +94,7 @@ export default function Home({ kategori }) {
                             className={`text-5xl md:text-8xl font-extrabold text-white mb-6 leading-tight drop-shadow-2xl transition-all duration-1000 delay-300 ease-out transform translate-y-10 opacity-0 ${loaded ? '!translate-y-0 !opacity-100' : ''}`}
                         >
                             Bandung <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-400 to-blue-200">Bebas Pungli</span>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-300 to-blue-200">Bebas Pungli</span>
                         </h1>
 
                         <p 
@@ -138,10 +138,10 @@ export default function Home({ kategori }) {
                 <div className="grid md:grid-cols-3 gap-8">
                     <div className="reveal-on-scroll bg-white p-8 rounded-[2rem] shadow-xl border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center group">
                         <div className="w-20 h-20 mx-auto bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-4xl mb-6 group-hover:scale-110 transition">
-                            <i className='bx bxs-shield-check'></i>
+                            <i className='bx bx-shield'></i>
                         </div>
                         <h3 className="text-3xl font-black text-slate-800 mb-2">100%</h3>
-                        <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">Identitas Aman</p>
+                        <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">Proses Aman</p>
                     </div>
 
                     <div className="reveal-on-scroll delay-100 bg-white p-8 rounded-[2rem] shadow-xl border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 text-center group">
@@ -162,7 +162,7 @@ export default function Home({ kategori }) {
                 </div>
             </div>
 
-            <section id="tentang" className="max-w-7xl mx-auto px-4 mb-32">
+            <section id="tentang" className="max-w-7xl mx-auto px-4 mb-32 pt-24">
                 <div className="flex flex-col lg:flex-row items-center gap-16">
                     <div className="lg:w-1/2 reveal-on-scroll">
                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6">
@@ -188,7 +188,7 @@ export default function Home({ kategori }) {
                             </div>
                             <div className="flex items-center gap-3">
                                 <i className='bx bxs-check-circle text-green-500 text-xl'></i>
-                                <span className="font-bold text-slate-700">Anonimitas</span>
+                                <span className="font-bold text-slate-700">Transparan</span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <i className='bx bxs-check-circle text-green-500 text-xl'></i>
@@ -243,7 +243,7 @@ export default function Home({ kategori }) {
                                 </div>
                                 <h3 className="text-2xl font-bold text-slate-800 mb-4">Verifikasi</h3>
                                 <p className="text-slate-500 leading-relaxed">
-                                    Admin kami akan memvalidasi laporan Anda. Anda dapat memantau statusnya di Dashboard secara realtime.
+                                    Admin kami akan memvalidasi laporan Anda. Anda dapat memantau statusnya pada riwayat laporan Anda secara realtime.
                                 </p>
                             </div>
                         </div>

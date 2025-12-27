@@ -10,19 +10,18 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $totalLaporan = Laporan::count();
-        $pending      = Laporan::where('status_tindakan', 'Pending')->count();
-        $proses       = Laporan::where('status_tindakan', 'Proses')->count();
-        $selesai      = Laporan::where('status_tindakan', 'Selesai')->count();
+        $stats = Laporan::selectRaw('status_tindakan, count(*) as total')
+            ->groupBy('status_tindakan')
+            ->pluck('total', 'status_tindakan');
 
         return response()->json([
             'status' => true,
             'message' => 'Data Statistik Dashboard',
             'data' => [
-                'total_laporan' => $totalLaporan,
-                'status_pending' => $pending,
-                'status_proses' => $proses,
-                'status_selesai' => $selesai,
+                'total_laporan' => $stats->sum(),
+                'status_pending' => $stats->get('Pending', 0),
+                'status_proses' => $stats->get('Proses', 0),
+                'status_selesai' => $stats->get('Selesai', 0),
             ]
         ], 200);
     }

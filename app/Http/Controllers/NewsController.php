@@ -12,11 +12,21 @@ class NewsController extends Controller
     /**
      * Halaman daftar berita (list)
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->input('search');
+
         $news = News::with('user')->published()
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                        ->orWhere('content', 'like', "%{$search}%")
+                        ->orWhere('excerpt', 'like', "%{$search}%");
+                });
+            })
             ->latest('published_at')
-            ->paginate(9)
+            ->paginate(6)
+            ->withQueryString()
             ->through(fn($item) => [
                 'id' => $item->id,
                 'title' => $item->title,
@@ -29,6 +39,7 @@ class NewsController extends Controller
 
         return Inertia::render('News/Index', [
             'news' => $news,
+            'filters' => $request->only(['search']),
             'page_title' => 'Berita Terkini',
         ]);
     }
@@ -70,10 +81,21 @@ class NewsController extends Controller
     /**
      * Admin: List semua berita (published & draft)
      */
-    public function adminIndex()
+    public function adminIndex(Request $request)
     {
-        $news = News::with('user')->latest('created_at')
-            ->paginate(15)
+        $search = $request->input('search');
+
+        $news = News::with('user')
+            ->when($search, function ($query, $search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                        ->orWhere('content', 'like', "%{$search}%")
+                        ->orWhere('excerpt', 'like', "%{$search}%");
+                });
+            })
+            ->latest('created_at')
+            ->paginate(6)
+            ->withQueryString()
             ->through(fn($item) => [
                 'id' => $item->id,
                 'title' => $item->title,
@@ -88,6 +110,7 @@ class NewsController extends Controller
 
         return Inertia::render('News/AdminIndex', [
             'news' => $news,
+            'filters' => $request->only(['search']),
             'page_title' => 'Kelola Berita',
         ]);
     }

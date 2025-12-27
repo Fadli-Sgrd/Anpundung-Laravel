@@ -9,6 +9,7 @@ export default function LaporanIndex({ laporan, kategori }) {
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [detailModalOpen, setDetailModalOpen] = useState(false);
     const [selectedReport, setSelectedReport] = useState(null);
+    const [statusDropdownOpen, setStatusDropdownOpen] = useState(null);
 
     const handleDelete = (id) => {
         if (confirm("Apakah Anda yakin ingin menghapus laporan ini?")) {
@@ -16,6 +17,17 @@ export default function LaporanIndex({ laporan, kategori }) {
                 preserveScroll: true
             });
         }
+    };
+
+    const handleStatusChange = (kode_laporan, newStatus) => {
+        router.patch(`/laporan/${kode_laporan}/status`, {
+            status_tindakan: newStatus
+        }, {
+            preserveScroll: true,
+            onSuccess: () => {
+                setStatusDropdownOpen(null);
+            }
+        });
     };
 
     const handleEdit = (report) => {
@@ -77,7 +89,7 @@ export default function LaporanIndex({ laporan, kategori }) {
                     </button>
                 </div>
 
-                {laporan.length === 0 ? (
+                {laporan.data.length === 0 ? (
                     <div className="bg-white rounded-3xl border-2 border-dashed border-slate-200 p-16 text-center">
                         <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300">
                             <i className='bx bx-notepad text-4xl'></i>
@@ -93,13 +105,42 @@ export default function LaporanIndex({ laporan, kategori }) {
                     </div>
                 ) : (
                     <div className="grid gap-6">
-                        {laporan.map((l) => (
-                            <div key={l.id} className="group block bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-400 transition relative overflow-hidden">
+                        {laporan.data.map((l) => (
+                            <div key={l.kode_laporan} className="group block bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-400 transition relative overflow-hidden">
                                 
                                 <div className="absolute top-6 right-6">
-                                    <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${getStatusClass(l.status_tindakan)}`}>
-                                        {l.status_tindakan}
-                                    </span>
+                                    {/* Admin can change status - show as dropdown */}
+                                    {auth.user.role === 'admin' ? (
+                                        <div className="relative">
+                                            <button
+                                                onClick={() => setStatusDropdownOpen(statusDropdownOpen === l.kode_laporan ? null : l.kode_laporan)}
+                                                className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider cursor-pointer transition ${getStatusClass(l.status_tindakan)}`}
+                                            >
+                                                {l.status_tindakan}
+                                                <i className={`bx bx-chevron-down ml-1 transition ${statusDropdownOpen === l.kode_laporan ? 'rotate-180' : ''}`}></i>
+                                            </button>
+                                            
+                                            {statusDropdownOpen === l.kode_laporan && (
+                                                <div className="absolute top-full right-0 mt-2 bg-white border border-slate-200 rounded-lg shadow-lg z-50">
+                                                    {['Pending', 'Proses', 'Selesai', 'Ditolak'].map((status) => (
+                                                        <button
+                                                            key={status}
+                                                            onClick={() => handleStatusChange(l.kode_laporan, status)}
+                                                            className={`block w-full text-left px-4 py-2 text-sm font-medium hover:bg-slate-50 first:rounded-t-lg last:rounded-b-lg transition ${
+                                                                l.status_tindakan === status ? 'bg-blue-50 text-blue-700' : 'text-slate-700'
+                                                            }`}
+                                                        >
+                                                            {status}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${getStatusClass(l.status_tindakan)}`}>
+                                            {l.status_tindakan}
+                                        </span>
+                                    )}
                                 </div>
 
                                 <div className="pr-24 pl-2"> 
@@ -154,6 +195,27 @@ export default function LaporanIndex({ laporan, kategori }) {
                                     </div>
                                 </div>
                             </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Pagination */}
+                {laporan.links?.length > 3 && (
+                    <div className="flex justify-center items-center space-x-2 mt-8">
+                        {laporan.links.map((link, index) => (
+                            <Link
+                                key={index}
+                                href={link.url || "#"}
+                                className={`px-4 py-2 rounded-xl text-sm font-bold transition ${
+                                    link.active
+                                        ? "bg-blue-600 text-white shadow-lg shadow-blue-200"
+                                        : link.url
+                                        ? "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
+                                        : "bg-slate-50 text-slate-300 cursor-not-allowed border border-slate-100"
+                                }`}
+                                dangerouslySetInnerHTML={{ __html: link.label }}
+                                preserveScroll
+                            />
                         ))}
                     </div>
                 )}
