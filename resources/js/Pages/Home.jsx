@@ -43,7 +43,7 @@ export default function Home({ kategori }) {
     return (
         <>
             <Head title="Beranda" />
-            
+
             <style>{`
                 .reveal-on-scroll {
                     opacity: 0;
@@ -57,7 +57,7 @@ export default function Home({ kategori }) {
                 .delay-100 { transition-delay: 0.1s; }
                 .delay-200 { transition-delay: 0.2s; }
                 .delay-300 { transition-delay: 0.3s; }
-                
+
                 /* Hide scrollbar for cleaner look if needed */
                 .no-scrollbar::-webkit-scrollbar {
                     display: none;
@@ -67,12 +67,12 @@ export default function Home({ kategori }) {
                     scrollbar-width: none;
                 }
             `}</style>
-            
+
             <div style={{ width: '100vw', marginLeft: 'calc(50% - 50vw)', marginTop: '-7rem' }} className="relative overflow-hidden mb-16">
 
                 <div className="relative w-full h-screen overflow-hidden">
 
-                    <div 
+                    <div
                         className={`absolute inset-0 bg-fixed bg-center bg-cover z-0 transition-transform duration-[3000ms] ease-out transform ${loaded ? 'scale-100' : 'scale-110'}`}
                         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1611638281871-1063d3e76e1f?q=80&w=1433&auto=format&fit=crop')" }}
                     >
@@ -82,7 +82,7 @@ export default function Home({ kategori }) {
 
                     <div className="relative z-20 h-full flex flex-col items-center justify-center text-center px-4 pt-20">
 
-                        <div 
+                        <div
                             className={`transition-all duration-1000 ease-out transform translate-y-10 opacity-0 ${loaded ? '!translate-y-0 !opacity-100' : ''}`}
                         >
                             <span className="inline-block py-2 px-6 rounded-full bg-white/10 border border-white/20 text-blue-100 text-xs font-bold tracking-[0.3em] uppercase mb-8 backdrop-blur-md shadow-2xl">
@@ -90,20 +90,20 @@ export default function Home({ kategori }) {
                             </span>
                         </div>
 
-                        <h1 
+                        <h1
                             className={`text-5xl md:text-8xl font-extrabold text-white mb-6 leading-tight drop-shadow-2xl transition-all duration-1000 delay-300 ease-out transform translate-y-10 opacity-0 ${loaded ? '!translate-y-0 !opacity-100' : ''}`}
                         >
                             Bandung <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-300 to-blue-200">Bebas Pungli</span>
                         </h1>
 
-                        <p 
+                        <p
                             className={`text-lg md:text-2xl text-slate-200 mb-12 max-w-2xl mx-auto font-light leading-relaxed drop-shadow-md transition-all duration-1000 delay-500 ease-out transform translate-y-10 opacity-0 ${loaded ? '!translate-y-0 !opacity-100' : ''}`}
                         >
                             Bersama ANPUNDUNG, wujudkan layanan publik yang bersih, transparan, dan bermartabat.
                         </p>
 
-                        <div 
+                        <div
                             className={`flex flex-col sm:flex-row items-center gap-5 transition-all duration-1000 delay-700 ease-out transform translate-y-10 opacity-0 ${loaded ? '!translate-y-0 !opacity-100' : ''}`}
                         >
                             {auth.user ? (
@@ -115,13 +115,13 @@ export default function Home({ kategori }) {
                                     <i className='bx bxs-megaphone text-xl'></i> Laporkan Sekarang
                                 </button>
                             ) : (
-                                <Link
+                                <a
                                     href="/login"
                                     className="px-10 py-4 bg-white text-slate-900 font-bold rounded-full shadow-2xl transition-all hover:scale-105 hover:bg-slate-100 flex items-center gap-3"
                                 >
                                     <i className='bx bxs-user-circle text-xl'></i> Masuk / Daftar
-                                </Link>
-                            )}
+                                </a>
+                            )}}
 
                             <button
                                 onClick={() => scrollTo('tentang')}
@@ -199,7 +199,7 @@ export default function Home({ kategori }) {
 
                     <div className="lg:w-1/2 relative reveal-on-scroll delay-200">
                         <div className="absolute inset-0 bg-blue-600 rounded-[2.5rem] rotate-6 opacity-10 transform scale-95"></div>
-                        <img 
+                        <img
                             src="https://images.unsplash.com/photo-1590476355683-96c1859f4658?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0"
                             alt="Misi Kami"
                             className="relative rounded-[2.5rem] shadow-2xl w-full object-cover h-[500px] border-4 border-white transition-transform hover:scale-[1.02] duration-500"
@@ -270,7 +270,7 @@ export default function Home({ kategori }) {
             <div className="max-w-6xl mx-auto px-4 mb-24 reveal-on-scroll">
                 <div className="relative rounded-[3rem] bg-slate-900/90 backdrop-blur-md overflow-hidden py-24 text-center px-6 shadow-2xl shadow-blue-900/30 group border border-white/10">
                     <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/30 rounded-full blur-[100px] group-hover:bg-blue-600/40 transition duration-1000 animate-pulse"></div>
-                    <div 
+                    <div
                         className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/30 rounded-full blur-[100px] group-hover:bg-purple-600/40 transition duration-1000 animate-pulse"
                         style={{ animationDelay: '1s' }}
                     ></div>
@@ -290,21 +290,21 @@ export default function Home({ kategori }) {
                                     <i className='bx bx-plus-circle'></i> Buat Laporan
                                 </button>
                             ) : (
-                                <Link
-                                    href="/register"
+                                <a
+                                    href="/login"
                                     className="px-10 py-5 bg-white/10 backdrop-blur-md border border-white/30 text-white font-bold rounded-full shadow-lg hover:bg-white hover:text-blue-900 hover:scale-105 transition transform flex items-center justify-center gap-2"
                                 >
                                     <i className='bx bx-user-plus'></i> Daftar Akun
-                                </Link>
-                            )}
+                                </a>
+                            )}}
                         </div>
                     </div>
                 </div>
             </div>
 
-            <ReportModal 
-                isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
+            <ReportModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
                 kategori={kategori}
             />
         </>

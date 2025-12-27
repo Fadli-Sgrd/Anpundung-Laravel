@@ -84,7 +84,7 @@
                         </a>
                     @endauth
 
-                    <a href="#tentang" 
+                    <a href="#tentang"
                     onclick="document.getElementById('tentang').scrollIntoView({ behavior: 'smooth' }); return false;"
                     class="px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/30 text-white font-bold rounded-full backdrop-blur-md transition-all hover:scale-105 flex items-center gap-2 scroll cursor-pointer">
                         <i class='bx bx-info-circle text-xl'></i> Pelajari
@@ -257,7 +257,7 @@
                             <i class='bx bx-plus-circle'></i> Buat Laporan
                         </button>
                     @else
-                        <a href="/register"
+                        <a href="/login"
                             class="px-10 py-5 bg-white/10 backdrop-blur-md border border-white/30 text-white font-bold rounded-full shadow-lg hover:bg-white hover:text-blue-900 hover:scale-105 transition transform flex items-center justify-center gap-2">
                             <i class='bx bx-user-plus'></i> Daftar Akun
                         </a>
