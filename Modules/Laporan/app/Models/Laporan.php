@@ -19,6 +19,11 @@ class Laporan extends Model
     
     use HasFactory;
 
+    protected static function newFactory()
+    {
+        return \Modules\Laporan\Database\Factories\LaporanFactory::new();
+    }
+
     protected $table = 'laporan';
     protected $primaryKey = 'kode_laporan';
 
