@@ -12,6 +12,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Laporan extends Model
 {
+    protected static function newFactory()
+    {
+        return \Modules\Laporan\Database\factories\LaporanFactory::new();
+    }
+    
     use HasFactory;
 
     protected static function newFactory()
@@ -49,7 +54,4 @@ class Laporan extends Model
     {
         return $this->hasMany(Bukti::class, 'kode_laporan', 'kode_laporan');
     }
-
-    
-
 }
