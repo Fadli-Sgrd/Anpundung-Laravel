@@ -60,6 +60,7 @@ class PageController extends Controller
             'email' => 'required|email|unique:users,email,' . Auth::id(),
         ]);
 
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         $user->update([
             'name'  => $request->name,
