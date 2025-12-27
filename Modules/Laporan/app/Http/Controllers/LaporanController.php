@@ -20,17 +20,17 @@ class LaporanController extends Controller
     {
         // Admin sees all reports; regular users see only their own
         if (Auth::check() && Auth::user()->role === 'admin') {
-            $laporan = Laporan::with(['user', 'kategori', 'bukti'])->latest()->get();
+            $laporan = Laporan::with(['user', 'kategori', 'bukti'])->latest()->paginate(10);
         } else {
             $laporan = Laporan::with(['user', 'kategori', 'bukti'])
                 ->where('user_id', Auth::id())
                 ->latest()
-                ->get();
+                ->paginate(10);
         }
 
 
 
-        $kategori = Kategori::all();
+        $kategori = Kategori::all()->sortBy(fn($k) => $k->nama_kategori === 'Lainnya' ? 1 : 0)->values();
         return Inertia::render('Laporan/Index', compact('laporan', 'kategori'));
     }
 
@@ -40,7 +40,7 @@ class LaporanController extends Controller
      */
     public function create()
     {
-        $kategori = Kategori::all();
+        $kategori = Kategori::all()->sortBy(fn($k) => $k->nama_kategori === 'Lainnya' ? 1 : 0)->values();
 
 
         return view('laporan::create', compact('kategori'));

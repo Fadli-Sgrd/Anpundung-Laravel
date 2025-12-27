@@ -1,96 +1,175 @@
 import { Head, Link } from "@inertiajs/react";
+import SearchInput from "@/Components/SearchInput";
 
-export default function NewsIndex({ news, page_title }) {
+export default function NewsIndex({ news, page_title, filters }) {
     return (
         <>
             <Head title={page_title} />
 
-            <div className="container mx-auto px-4 py-8">
-                <h1 className="text-4xl font-bold text-gray-800 mb-8">
-                    {page_title}
-                </h1>
+            <div className="bg-[#f8fafc] min-h-screen pb-20">
+                {/* Hero / Header Section */}
+                <div className="relative bg-slate-900 py-24 mb-12 overflow-hidden rounded-[2.5rem]">
+                    {/* Background Texture */}
+                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
 
-                {/* Grid Berita */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {news.data.map((item) => (
-                        <Link
-                            key={item.id}
-                            href={route("news.show", item.slug)}
-                            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
-                        >
-                            {/* Gambar Berita */}
-                            {item.image && (
-                                <img
-                                    src={item.image}
-                                    alt={item.title}
-                                    className="w-full h-48 object-cover"
-                                />
-                            )}
+                    {/* Background Gradient (Diubah ke tengah/center agar simetris) */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full md:w-2/3 h-full bg-gradient-to-b from-blue-600/10 to-transparent blur-3xl"></div>
 
-                            <div className="p-5">
-                                {/* Meta Info */}
-                                <div className="flex items-center text-sm text-gray-500 mb-3">
-                                    <span>{item.published_at}</span>
-                                    {item.author && (
-                                        <>
-                                            <span className="mx-2">•</span>
-                                            <span>{item.author}</span>
-                                        </>
-                                    )}
-                                </div>
+                    {/* Content Container */}
+                    <div className="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+                        {/* Label / Badge */}
+                        <div className="flex items-center justify-center gap-3 text-blue-400 font-bold text-sm uppercase tracking-widest mb-4">
+                            <span className="w-12 h-[2px] bg-blue-500"></span>
+                            <span>Informasi & Edukasi</span>
+                            <span className="w-12 h-[2px] bg-blue-500"></span> {/* Menambahkan garis kedua di kanan agar seimbang */}
+                        </div>
 
-                                {/* Title */}
-                                <h2 className="text-xl font-semibold text-gray-800 mb-2 hover:text-blue-600 transition-colors">
-                                    {item.title}
-                                </h2>
+                        {/* Heading */}
+                        <h1 className="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">
+                            Portal Berita <span className="text-blue-500">Anpundung.</span>
+                        </h1>
 
-                                {/* Excerpt */}
-                                {item.excerpt && (
-                                    <p className="text-gray-600 line-clamp-3">
-                                        {item.excerpt}
-                                    </p>
-                                )}
-
-                                {/* Read More */}
-                                <div className="mt-4">
-                                    <span className="text-blue-600 font-medium hover:underline">
-                                        Baca Selengkapnya →
-                                    </span>
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-
-                {/* Pagination */}
-                {news.links.length > 3 && (
-                    <div className="flex justify-center items-center space-x-2 mt-8">
-                        {news.links.map((link, index) => (
-                            <Link
-                                key={index}
-                                href={link.url || "#"}
-                                className={`px-4 py-2 rounded-md ${
-                                    link.active
-                                        ? "bg-blue-600 text-white"
-                                        : link.url
-                                        ? "bg-white text-gray-700 hover:bg-gray-100"
-                                        : "bg-gray-100 text-gray-400 cursor-not-allowed"
-                                }`}
-                                dangerouslySetInnerHTML={{ __html: link.label }}
-                                preserveScroll
-                            />
-                        ))}
-                    </div>
-                )}
-
-                {/* Empty State */}
-                {news.data.length === 0 && (
-                    <div className="text-center py-12">
-                        <p className="text-gray-500 text-lg">
-                            Belum ada berita yang dipublikasikan.
+                        {/* Description */}
+                        <p className="text-slate-400 text-xl max-w-2xl mx-auto leading-relaxed">
+                            Dapatkan berita terbaru mengenai aksi pemberantasan pungli, tips keamanan, dan edukasi hukum di Kota Bandung.
                         </p>
                     </div>
-                )}
+                </div>
+
+                <div className="container mx-auto px-6">
+
+                            {/* Search Section */}
+                            <div className="flex justify-end mb-16 -mt-100">
+                                <SearchInput 
+                                    routeName="news.index" 
+                                    initialValue={filters?.search || ""} 
+                                    placeholder="Cari berita berdasarkan judul atau konten..."
+                                />
+                            </div>
+                    {/* Featured Section (Optional - if data exists) */}
+                    {(news.data.length > 0 || filters?.search) && (
+                        <div className="mb-16">
+                            <div className="flex items-center justify-between mb-8">
+                                <h2 className="text-3xl font-extrabold text-slate-800 tracking-tight flex items-center gap-3">
+                                    {filters?.search ? `Hasil Pencarian: "${filters.search}"` : 'Berita Terbaru'}
+                                    <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                                </h2>
+                            </div>
+
+
+
+                            {/* Grid Berita */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                                {news.data.map((item) => (
+                                    <Link
+                                        key={item.id}
+                                        href={route("news.show", item.slug)}
+                                        className="group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-200/40 transition-all duration-500 hover:-translate-y-2 flex flex-col h-full"
+                                    >
+                                        {/* Image Wrap */}
+                                        <div className="relative h-64 overflow-hidden">
+                                            {item.image ? (
+                                                <img
+                                                    src={item.image}
+                                                    alt={item.title}
+                                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-slate-100 flex items-center justify-center text-slate-300">
+                                                    <i className="bx bx-image-alt text-6xl"></i>
+                                                </div>
+                                            )}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                            <div className="absolute bottom-4 left-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                                <span className="text-white font-bold flex items-center gap-2">
+                                                    Baca Selengkapnya <i className="bx bx-right-arrow-alt text-xl"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div className="p-8 flex flex-col flex-grow">
+                                            {/* Meta */}
+                                            <div className="flex items-center gap-4 mb-5">
+                                                <span className="px-4 py-1.5 bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest rounded-full border border-blue-100">
+                                                    Artikel
+                                                </span>
+                                                <span className="text-slate-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
+                                                    <i className="bx bx-calendar text-sm"></i>
+                                                    {item.published_at}
+                                                </span>
+                                            </div>
+
+                                            {/* Title */}
+                                            <h3 className="text-2xl font-extrabold text-slate-800 mb-4 group-hover:text-blue-600 transition-colors leading-snug">
+                                                {item.title}
+                                            </h3>
+
+                                            {/* Excerpt */}
+                                            {item.excerpt && (
+                                                <p className="text-slate-500 text-base line-clamp-3 mb-6 leading-relaxed font-medium">
+                                                    {item.excerpt}
+                                                </p>
+                                            )}
+
+                                            {/* Author */}
+                                            <div className="mt-auto pt-6 border-t border-slate-50 flex items-center justify-between">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-[10px]">
+                                                        {(item.author || "A")[0]}
+                                                    </div>
+                                                    <span className="text-sm font-bold text-slate-600">
+                                                        {item.author || "Admin"}
+                                                    </span>
+                                                </div>
+                                                <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-300 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 shadow-inner">
+                                                    <i className="bx bx-chevron-right text-2xl"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Empty State */}
+                    {news.data.length === 0 && (
+                        <div className="bg-white rounded-[3rem] p-24 text-center border border-slate-100 shadow-xl shadow-slate-100">
+                            <div className="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-8 text-slate-200">
+                                <i className="bx bx-search text-6xl"></i>
+                            </div>
+                            <h3 className="text-3xl font-black text-slate-800 mb-4">
+                                {filters?.search ? `Tidak ada berita untuk "${filters.search}"` : 'Tidak ada berita saat ini.'}
+                            </h3>
+                            <p className="text-slate-500 text-lg max-w-md mx-auto leading-relaxed">
+                                {filters?.search 
+                                    ? "Coba gunakan kata kunci lain yang lebih umum." 
+                                    : "Kami sedang menyiapkan konten informasi menarik untuk Anda. Silakan kembali lagi nanti!"}
+                            </p>
+                        </div>
+                    )}
+
+                    {/* Pagination */}
+                    {news.links.length > 3 && (
+                        <div className="flex justify-center items-center gap-3 mt-12 pb-12">
+                            {news.links.map((link, index) => (
+                                <Link
+                                    key={index}
+                                    href={link.url || "#"}
+                                    className={`min-w-[50px] h-[50px] flex items-center justify-center rounded-2xl text-sm font-black transition-all duration-300 ${
+                                        link.active
+                                            ? "bg-blue-600 text-white shadow-xl shadow-blue-200 scale-110"
+                                            : link.url
+                                            ? "bg-white text-slate-600 hover:bg-white border border-slate-200 hover:border-blue-400 hover:text-blue-600 hover:shadow-lg hover:shadow-blue-50 shadow-sm"
+                                            : "bg-slate-50 text-slate-300 cursor-not-allowed border border-slate-100"
+                                    }`}
+                                    dangerouslySetInnerHTML={{ __html: link.label }}
+                                    preserveScroll
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
         </>
     );

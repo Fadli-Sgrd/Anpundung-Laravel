@@ -89,7 +89,7 @@ export default function LaporanIndex({ laporan, kategori }) {
                     </button>
                 </div>
 
-                {laporan.length === 0 ? (
+                {laporan.data.length === 0 ? (
                     <div className="bg-white rounded-3xl border-2 border-dashed border-slate-200 p-16 text-center">
                         <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300">
                             <i className='bx bx-notepad text-4xl'></i>
@@ -105,7 +105,7 @@ export default function LaporanIndex({ laporan, kategori }) {
                     </div>
                 ) : (
                     <div className="grid gap-6">
-                        {laporan.map((l) => (
+                        {laporan.data.map((l) => (
                             <div key={l.kode_laporan} className="group block bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-400 transition relative overflow-hidden">
                                 
                                 <div className="absolute top-6 right-6">
@@ -195,6 +195,27 @@ export default function LaporanIndex({ laporan, kategori }) {
                                     </div>
                                 </div>
                             </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Pagination */}
+                {laporan.links?.length > 3 && (
+                    <div className="flex justify-center items-center space-x-2 mt-8">
+                        {laporan.links.map((link, index) => (
+                            <Link
+                                key={index}
+                                href={link.url || "#"}
+                                className={`px-4 py-2 rounded-xl text-sm font-bold transition ${
+                                    link.active
+                                        ? "bg-blue-600 text-white shadow-lg shadow-blue-200"
+                                        : link.url
+                                        ? "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
+                                        : "bg-slate-50 text-slate-300 cursor-not-allowed border border-slate-100"
+                                }`}
+                                dangerouslySetInnerHTML={{ __html: link.label }}
+                                preserveScroll
+                            />
                         ))}
                     </div>
                 )}

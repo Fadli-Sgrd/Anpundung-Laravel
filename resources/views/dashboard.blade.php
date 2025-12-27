@@ -104,7 +104,7 @@
                             </div>
                             <h4 class="font-bold text-slate-800 mb-1 group-hover:text-blue-600 transition">Kelola
                                 Laporan</h4>
-                            <p class="text-sm text-slate-500">Verifikasi, tolak, atau tindak lanjuti laporan warga.
+                            <p class="text-sm text-slate-500">Mengubah Status Laporan, Pending, Selesai, Ditolak.
                             </p>
                         </a>
 
@@ -127,7 +127,7 @@
                             </div>
                             <h4 class="font-bold text-slate-800 mb-1 group-hover:text-emerald-600 transition">
                                 Kelola Berita</h4>
-                            <p class="text-sm text-slate-500">Buat, edit, atau hapus berita dan artikel.</p>
+                            <p class="text-sm text-slate-500">Membuat, mengedit, atau menghapus berita.</p>
                         </a>
 
                         <a href="{{ route('admin.pesan.index') }}"
