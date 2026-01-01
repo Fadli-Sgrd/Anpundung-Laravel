@@ -12,11 +12,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Laporan extends Model
 {
-    protected static function newFactory()
-    {
-        return \Modules\Laporan\Database\factories\LaporanFactory::new();
-    }
-    
     use HasFactory;
 
     protected static function newFactory()

@@ -91,10 +91,10 @@
                 @endif
                 
                 <div class="w-full space-y-4">
-                    <input type="email" name="email" value="{{ old('email') }}" placeholder="Email Anda" class="bg-slate-50 border border-slate-200 w-full py-3 px-4 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all" required />
+                    <x-text-input type="email" name="email" value="{{ old('email') }}" placeholder="Email Anda" class="bg-slate-50 py-3 px-4" required />
                     
                     <div class="relative w-full" x-data="{ show: false }">
-                        <input :type="show ? 'text' : 'password'" name="password" placeholder="Kata Sandi" class="bg-slate-50 border border-slate-200 w-full py-3 px-4 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all" required />
+                        <x-text-input ::type="show ? 'text' : 'password'" name="password" placeholder="Kata Sandi" class="bg-slate-50 py-3 px-4" required />
                         <button type="button" @click="show = !show" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600 cursor-pointer">
                             <i class='bx text-xl' :class="show ? 'bx-show' : 'bx-hide'"></i>
                         </button>

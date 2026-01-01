@@ -23,19 +23,6 @@ Route::get('/berita', [NewsController::class, 'index'])->name('news.index');
 Route::get('/berita/{slug}', [NewsController::class, 'show'])->name('news.show');
 
 
-// ==================== TEST EMAIL ====================
-Route::get('/test-email', function () {
-    try {
-        \Illuminate\Support\Facades\Mail::raw('Test email berfungsi dengan baik!', function ($message) {
-            $message->to('annpundung@sisteminformasikotacerdas.id')
-                    ->subject('Test Email - Anpundung');
-        });
-        return 'Email berhasil dikirim!';
-    } catch (\Exception $e) {
-        return 'Error: ' . $e->getMessage();
-    }
-});
-
 Route::middleware('guest')->group(function () {
     // LOGIN & REGISTER
     Route::get('/login', [AuthController::class, 'loginForm'])->name('login');

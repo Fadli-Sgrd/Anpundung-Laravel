@@ -14,15 +14,13 @@
                 @csrf
 
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Nama Kategori <span class="text-red-500">*</span></label>
-                    <input type="text" name="nama_kategori" placeholder="Contoh: Pungli Parkir" required
-                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition text-slate-700 font-medium">
+                    <x-input-label value="Nama Kategori" />
+                    <x-text-input type="text" name="nama_kategori" placeholder="Contoh: Pungli Parkir" required class="px-4 py-3" />
                 </div>
 
                 <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Deskripsi (Opsional)</label>
-                    <textarea name="deskripsi" rows="3" placeholder="Jelaskan singkat tentang kategori ini..."
-                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition text-slate-700 font-medium"></textarea>
+                    <x-input-label value="Deskripsi (Opsional)" />
+                    <x-textarea name="deskripsi" rows="3" placeholder="Jelaskan singkat tentang kategori ini..." class="px-4 py-3"></x-textarea>
                 </div>
 
                 <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-blue-200 transition transform active:scale-95 flex items-center justify-center gap-2">

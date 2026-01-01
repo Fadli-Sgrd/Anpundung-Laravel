@@ -27,17 +27,13 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-
         [x-cloak] {
             display: none !important;
         }
     </style>
 </head>
 
-<body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen">
+<body class="bg-slate-50 text-slate-800 antialiased flex flex-col min-h-screen font-sans">
 
     <x-navbar />
 

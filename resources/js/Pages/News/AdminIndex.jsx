@@ -1,6 +1,7 @@
 import { Head, Link, router } from "@inertiajs/react";
 import { useState } from "react";
 import SearchInput from "@/Components/SearchInput";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function AdminIndex({ news, page_title, filters }) {
     const [deleting, setDeleting] = useState(null);
@@ -18,28 +19,21 @@ export default function AdminIndex({ news, page_title, filters }) {
         <>
             <Head title={page_title || "Kelola Berita"} />
 
-            <div className="w-full max-w-7xl mx-auto">
+            <div className="max-w-7xl mx-auto px-4 py-8">
                 {/* Header Section */}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
+                <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-10">
                     <div>
-                        <div className="flex items-center gap-2 text-blue-600 font-bold text-sm uppercase tracking-widest mb-3">
-                            <span className="w-8 h-[2px] bg-blue-600"></span>
-                            <span>News Management</span>
-                        </div>
-                        <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">
+                        <h1 className="text-3xl font-extrabold text-slate-800 mb-2">
                             {page_title || "Kelola Berita"}
                         </h1>
-                        <p className="text-slate-500 mt-2 text-lg">
+                        <p className="text-slate-500">
                             Kelola semua konten berita untuk masyarakat Bandung.
                         </p>
                     </div>
-                    <Link
-                        href={route("admin.news.create")}
-                        className="inline-flex items-center gap-2 bg-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 transition transform hover:-translate-y-1"
-                    >
-                        <i className="bx bx-plus-circle text-2xl"></i>
+                    <PrimaryButton href={route("admin.news.create")}>
+                        <i className="bx bx-plus-circle text-xl"></i>
                         <span className="relative">Tulis Berita Baru</span>
-                    </Link>
+                    </PrimaryButton>
                 </div>
 
                 {/* Search & Filters */}

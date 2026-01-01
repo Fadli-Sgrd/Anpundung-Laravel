@@ -68,7 +68,7 @@ export default function Home({ kategori }) {
                 }
             `}</style>
             
-            <div style={{ width: '100vw', marginLeft: 'calc(50% - 50vw)', marginTop: '-7rem' }} className="relative overflow-hidden mb-16">
+            <div className="w-screen ml-[calc(50%-50vw)] -mt-28 relative overflow-hidden mb-16">
 
                 <div className="relative w-full h-screen overflow-hidden">
 
@@ -208,7 +208,7 @@ export default function Home({ kategori }) {
                 </div>
             </section>
 
-            <div style={{ width: '100vw', marginLeft: 'calc(50% - 50vw)' }} className="py-24 bg-slate-50 px-4 mb-20">
+            <div className="w-screen ml-[calc(50%-50vw)] py-24 bg-slate-50 px-4 mb-20">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16 reveal-on-scroll">
                         <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Lapor Pungli Semudah 1-2-3</h2>
