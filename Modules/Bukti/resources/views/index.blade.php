@@ -38,16 +38,15 @@
 
                 <!-- Laporan Selection -->
                 <div style="margin-bottom: 24px;">
-                    <label style="display: block; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; margin-bottom: 8px;">Pilih Laporan</label>
-                    <input type="text" name="kode_laporan" placeholder="Masukkan kode laporan atau buka dari halaman detail laporan" required
-                        style="width: 100%; padding: 10px; border: 2px solid #eee; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 14px; box-sizing: border-box;">
+                    <x-input-label value="Pilih Laporan" />
+                    <x-text-input type="text" name="kode_laporan" placeholder="Masukkan kode laporan atau buka dari halaman detail laporan" required class="p-3" />
                 </div>
 
                 <!-- Jenis Bukti -->
                 <div style="margin-bottom: 24px;">
-                    <label style="display: block; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; margin-bottom: 8px;">Jenis Bukti</label>
+                    <x-input-label value="Jenis Bukti" />
                     <select name="jenis" required
-                        style="width: 100%; padding: 10px; border: 2px solid #eee; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 14px; box-sizing: border-box;">
+                        class="w-full rounded-xl border-slate-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-200 p-3">
                         <option value="">-- Pilih Jenis --</option>
                         <option value="Gambar">Gambar</option>
                         <option value="Video">Video</option>
@@ -56,16 +55,15 @@
 
                 <!-- File Input -->
                 <div style="margin-bottom: 24px;">
-                    <label style="display: block; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; margin-bottom: 8px;">File Bukti</label>
+                    <x-input-label value="File Bukti" />
                     <input type="file" name="file" required accept="image/*,video/mp4"
-                        style="width: 100%; padding: 10px; border: 2px dashed #308478; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 14px; box-sizing: border-box;">
+                        class="w-full px-4 py-3 bg-white border-2 border-dashed border-teal-600 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/20 cursor-pointer">
                 </div>
 
                 <!-- Description -->
                 <div style="margin-bottom: 24px;">
-                    <label style="display: block; font-family: 'Poppins', sans-serif; font-weight: 500; color: #333; margin-bottom: 8px;">Deskripsi Bukti (Opsional)</label>
-                    <textarea name="deskripsi" placeholder="Jelaskan apa yang ditunjukkan bukti ini..."
-                        style="width: 100%; padding: 10px; border: 2px solid #eee; border-radius: 8px; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 14px; box-sizing: border-box; min-height: 80px; resize: vertical;"></textarea>
+                    <x-input-label value="Deskripsi Bukti (Opsional)" />
+                    <x-textarea name="deskripsi" placeholder="Jelaskan apa yang ditunjukkan bukti ini..." style="min-height: 80px;" class="p-3"></x-textarea>
                 </div>
 
                 <!-- Submit -->

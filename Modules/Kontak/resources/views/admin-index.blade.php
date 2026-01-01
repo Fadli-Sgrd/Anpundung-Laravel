@@ -28,35 +28,21 @@
         {{--      FLASH MESSAGE      --}}
         {{-- ======================= --}}
         @if (session('success'))
-            <div class="bg-emerald-50 border border-emerald-100 text-emerald-700 px-5 py-4 rounded-2xl mb-8 flex items-start gap-3 shadow-sm animate-fade-in-down">
-                <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center shrink-0">
-                    <i class='bx bxs-check-circle text-xl'></i>
-                </div>
-                <div>
-                    <p class="font-bold">Berhasil!</p>
-                    <p class="text-sm opacity-90">{{ session('success') }}</p>
-                </div>
-            </div>
+            <x-alert type="success" :message="session('success')" />
         @endif
 
         {{-- ======================= --}}
         {{--      STATS SECTION      --}}
         {{-- ======================= --}}
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <div class="bg-gradient-to-br from-blue-600 to-slate-900 rounded-2xl p-6 text-white shadow-lg shadow-blue-200 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 bg-white opacity-10 rounded-full blur-xl group-hover:scale-150 transition duration-700"></div>
-                
-                <div class="relative z-10">
-                    <div class="flex items-center justify-between mb-4">
-                        <p class="text-blue-100 text-sm font-bold uppercase tracking-wider">Total Pesan</p>
-                        <div class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center backdrop-blur-sm">
-                            <i class='bx bxs-inbox text-xl text-white'></i>
-                        </div>
-                    </div>
-                    <h2 class="text-4xl font-extrabold text-white mb-1">{{ $feedback->count() }}</h2>
-                    <p class="text-xs text-blue-200">Pesan diterima sistem</p>
-                </div>
-            </div>
+            <x-stat-card 
+                variant="solid" 
+                title="Total Pesan"
+                value="{{ $feedback->count() }}"
+                icon="bx bxs-inbox"
+                color="blue"
+                subtext="Pesan diterima sistem"
+            />
             
             <div class="hidden md:block md:col-span-2"></div>
         </div>

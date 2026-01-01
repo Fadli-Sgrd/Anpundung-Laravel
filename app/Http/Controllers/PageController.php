@@ -28,19 +28,6 @@ class PageController extends Controller
      $kategori = Kategori::all();
         return Inertia::render('Edukasi', compact('kategori'));
     }
-
-    /**
-     * Berita - public laporan dari semua user
-     */
-    public function riwayat()
-    {
-        $laporan = Laporan::with(['user', 'kategori', 'bukti'])
-            ->latest()
-            ->get();
-
-        return view('pages.riwayat', compact('laporan'));
-    }
-
     /**
      * Profile - user profile page
      */

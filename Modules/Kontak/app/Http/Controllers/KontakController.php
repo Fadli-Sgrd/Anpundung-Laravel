@@ -12,8 +12,8 @@ class KontakController extends Controller
 {
     public function index()
     {
-        $kategori = Kategori::all();
-        return Inertia::render('Kontak', compact('kategori'));
+        $kategori = Kategori::select('id', 'nama_kategori')->get();
+        return Inertia::render('Kontak/Index', compact('kategori'));
     }
 
     public function store(Request $request)

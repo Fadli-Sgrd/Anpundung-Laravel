@@ -2,6 +2,7 @@ import { Head, Link, usePage, router } from "@inertiajs/react";
 import { useState } from "react";
 import ReportModal from "@/Components/ReportModal";
 import DetailModal from "@/Components/DetailModal";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function LaporanIndex({ laporan, kategori }) {
     const { auth, flash } = usePage().props;
@@ -81,12 +82,9 @@ export default function LaporanIndex({ laporan, kategori }) {
                         <h1 className="text-3xl font-extrabold text-slate-800 mb-2">Riwayat Laporan</h1>
                         <p className="text-slate-500">Pantau status dan perkembangan aduan yang telah Anda kirim.</p>
                     </div>
-                    <button 
-                        onClick={handleCreate}
-                        className="inline-flex items-center gap-2 bg-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 transition transform hover:-translate-y-1"
-                    >
+                    <PrimaryButton onClick={handleCreate}>
                         <i className='bx bx-plus-circle text-xl'></i> Buat Laporan Baru
-                    </button>
+                    </PrimaryButton>
                 </div>
 
                 {laporan.data.length === 0 ? (
@@ -165,20 +163,20 @@ export default function LaporanIndex({ laporan, kategori }) {
                                         {/* View Button */}
                                         <button 
                                             onClick={(e) => { e.preventDefault(); handleView(l); }}
-                                            className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition"
+                                            className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-slate-500 flex items-center justify-center hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all shadow-sm"
                                             title="Lihat Detail"
                                         >
-                                            <i className='bx bx-show text-lg'></i>
+                                            <i className='bx bx-show text-xl'></i>
                                         </button>
 
                                         {/* Edit Button (Owner or Admin) */}
                                         {(auth.user.role === 'admin' || auth.user.id === l.user_id) && l.status_tindakan === 'Pending' && (
                                             <button 
                                                 onClick={(e) => { e.preventDefault(); handleEdit(l); }}
-                                                className="w-8 h-8 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center hover:bg-orange-600 hover:text-white transition"
+                                                className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-slate-500 flex items-center justify-center hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-all shadow-sm"
                                                 title="Edit Laporan"
                                             >
-                                                <i className='bx bx-pencil text-lg'></i>
+                                                <i className='bx bx-edit-alt text-xl'></i>
                                             </button>
                                         )}
 
@@ -186,10 +184,10 @@ export default function LaporanIndex({ laporan, kategori }) {
                                         {(auth.user.role === 'admin' || auth.user.id === l.user_id) && (
                                             <button 
                                                 onClick={(e) => { e.preventDefault(); handleDelete(l.kode_laporan); }}
-                                                className="w-8 h-8 rounded-full bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition"
+                                                className="w-10 h-10 rounded-xl bg-white border border-slate-200 text-slate-500 flex items-center justify-center hover:bg-rose-600 hover:text-white hover:border-rose-600 transition-all shadow-sm"
                                                 title="Hapus Laporan"
                                             >
-                                                <i className='bx bx-trash text-lg'></i>
+                                                <i className='bx bx-trash text-xl'></i>
                                             </button>
                                         )}
                                     </div>

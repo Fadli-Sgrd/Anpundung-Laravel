@@ -12,25 +12,9 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #ffffff;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
 </head>
 
-<body>
+<body class="bg-white font-sans antialiased min-h-screen flex items-center justify-center">
     <div id="app">
         {{ $slot }}
     </div>

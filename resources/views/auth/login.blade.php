@@ -102,16 +102,16 @@
                     @csrf
                     
                     <div class="group">
-                        <label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
-                        <input type="email" name="email" class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-400 font-medium group-hover:border-slate-300" placeholder="contoh@email.com" required>
+                        <x-input-label value="Email Address" />
+                        <x-text-input type="email" name="email" placeholder="contoh@email.com" class="px-5 py-4" required />
                     </div>
 
                     <div class="group">
-                        <div class="flex justify-between items-center mb-2">
-                            <label class="block text-sm font-bold text-slate-700">Password</label>
+                        <div class="flex justify-between items-center mb-1">
+                            <x-input-label value="Password" />
                             <a href="{{ route('password.request') }}" class="text-sm font-bold text-blue-600 hover:text-blue-800 transition-colors">Lupa Password?</a>
                         </div>
-                        <input type="password" name="password" class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-400 font-medium group-hover:border-slate-300" placeholder="••••••••" required>
+                        <x-text-input type="password" name="password" placeholder="••••••••" class="px-5 py-4" required />
                     </div>
 
                     <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-600/20 hover:shadow-blue-600/40 transition-all transform hover:-translate-y-0.5 active:scale-95 flex justify-center items-center gap-2 mt-4">
@@ -132,23 +132,23 @@
                     @csrf
                     
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2">Nama Lengkap</label>
-                        <input type="text" name="name" class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-400 font-medium" placeholder="Contoh: John Doe" required>
+                        <x-input-label value="Nama Lengkap" />
+                        <x-text-input type="text" name="name" placeholder="Contoh: John Doe" class="px-5 py-4" required />
                     </div>
 
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
-                        <input type="email" name="email" class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-400 font-medium" placeholder="email@anda.com" required>
+                        <x-input-label value="Email Address" />
+                        <x-text-input type="email" name="email" placeholder="email@anda.com" class="px-5 py-4" required />
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Password</label>
-                            <input type="password" name="password" class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-400 font-medium" placeholder="Min 8 Karakter" required>
+                            <x-input-label value="Password" />
+                            <x-text-input type="password" name="password" placeholder="Min 8 Karakter" class="px-5 py-4" required />
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Konfirmasi Password</label>
-                            <input type="password" name="password_confirmation" class="w-full px-5 py-4 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all placeholder:text-slate-400 font-medium" placeholder="Samakan" required>
+                            <x-input-label value="Konfirmasi Password" />
+                            <x-text-input type="password" name="password_confirmation" placeholder="Samakan" class="px-5 py-4" required />
                         </div>
                     </div>
 

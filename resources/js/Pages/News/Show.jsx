@@ -15,7 +15,7 @@ export default function NewsShow({ news, page_title }) {
             <div className="bg-white min-h-screen pb-20">
                 {/* Progress Bar (Optional) */}
                 <div className="fixed top-0 left-0 w-full h-1.5 bg-slate-100 z-50">
-                    <div className="h-full bg-blue-600 transition-all duration-300" style={{ width: '0%' }}></div>
+                    <div className="h-full bg-blue-600 transition-all duration-300 w-0"></div>
                 </div>
 
                 {/* Main Article Container */}
