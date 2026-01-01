@@ -6,14 +6,19 @@ use App\Http\Controllers\Api\LaporanController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\KategoriController;
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\BeritaController;
+use App\Http\Controllers\Api\KontakController;
+use App\Http\Controllers\Api\RegisterController;
 
 // 1. Rute Public (Bisa diakses siapa saja)
 Route::post('/login', [LoginController::class, 'login']);
+Route::post('/register', [RegisterController::class, 'register']);
 
-// 2. Rute Private (Harus Login dulu, dijaga Middleware ApiAuth)
-// Pastikan nama middleware 'api_auth' sudah didaftarkan ya!
+    Route::get('/berita', [BeritaController::class, 'index']); 
+    Route::get('/berita/{key}', [BeritaController::class, 'show']);
+    Route::post('/kontak', [KontakController::class, 'store']);
  
-Route::middleware(['api_auth'])->group(function () {
+    Route::middleware(['api_auth'])->group(function () {
     
     Route::get('/laporan', [LaporanController::class, 'index']);
     Route::post('/laporan', [LaporanController::class, 'store']);
