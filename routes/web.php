@@ -42,7 +42,7 @@ Route::middleware('guest')->group(function () {
 
     // 4. Proses update password baru ke database
     Route::post('/reset-password', [App\Http\Controllers\ForgotPasswordController::class, 'reset'])->name('password.update');
-    
+
 });
 
 Route::middleware('auth')->group(function () {
