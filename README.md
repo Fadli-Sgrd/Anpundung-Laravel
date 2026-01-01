@@ -1,59 +1,97 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1 align="center">ANPUNDUNG</h1>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+Platform Pelaporan dan Informasi Publik Berbasis Web  
+Dibangun menggunakan Laravel & Inertia.js
 </p>
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📌 Tentang Anpundung
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Anpundung** adalah aplikasi berbasis web yang dirancang untuk memfasilitasi masyarakat dalam:
+- Mengakses informasi dan berita resmi
+- Melakukan pelaporan permasalahan di lingkungan sekitar
+- Meningkatkan transparansi dan komunikasi antara masyarakat dan pihak pengelola
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Aplikasi ini membedakan **hak akses pengguna**:
+- **Admin**: mengelola berita, memverifikasi dan menindaklanjuti laporan
+- **User**: melihat berita dan mengirim laporan
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🧩 Fitur Utama
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 👤 User
+- Melihat daftar berita
+- Melihat detail berita
+- Mengirim laporan permasalahan
 
-## Laravel Sponsors
+### 🛠️ Admin
+- Dashboard admin
+- CRUD Berita (Create, Read, Update, Delete)
+- Melihat seluruh berita yang dipublikasikan
+- Melihat detail laporan dari user
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## ⚙️ Teknologi yang Digunakan
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- **Laravel** (Backend)
+- **Inertia.js + React** (Frontend)
+- **MySQL** (Database)
+- **Tailwind / Bootstrap** (UI)
+- **Vite** (Asset bundler)
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🗂️ Struktur Umum Proyek
 
-## Code of Conduct
+app/
+└── Http/Controllers
+resources/
+└── js/Pages
+└── Berita
+├── Index.jsx
+├── Create.jsx
+├── Edit.jsx
+└── Show.jsx
+routes/
+└── web.php
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## 🚀 Instalasi & Menjalankan Project
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+git clone https://github.com/username/anpundung.git
+cd anpundung
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+npm run dev
+php artisan serve
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+🔐 Hak Akses
+
+Akses halaman dashboard dan manajemen berita dibatasi untuk admin
+
+User umum hanya dapat mengakses halaman publik
+
+---
+
+📄 Lisensi
+
+Project ini dikembangkan untuk keperluan akademik dan pembelajaran.
+Penggunaan di luar konteks tersebut menjadi tanggung jawab masing-masing pihak.
+
+---
+
+✍️ Author
+
+Anpundung Team
+Mahasiswa D4 Sistem Informasi Kota Cerdas
+Universitas Telkom

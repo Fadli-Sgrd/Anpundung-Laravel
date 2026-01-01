@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
                 KategoriSeeder::class,
                 LaporanSeeder::class,
                 KontakSeeder::class,
+                NewsSeeder::class,
             ]);
         }
     }

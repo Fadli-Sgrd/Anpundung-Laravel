@@ -17,7 +17,8 @@ class LaporanController extends Controller
     {
         $userId = Auth::id();
 
-        $data = Laporan::where('user_id', $userId)
+        $data = Laporan::with(['kategori', 'bukti'])
+                       ->where('user_id', $userId)
                        ->orderBy('created_at', 'desc')
                        ->get();
 
@@ -82,7 +83,8 @@ class LaporanController extends Controller
     public function show($id)
     {
 
-        $laporan = Laporan::where('user_id', Auth::id())
+        $laporan = Laporan::with(['kategori', 'bukti'])
+                          ->where('user_id', Auth::id())
                           ->where('kode_laporan', $id) 
                           ->first();
 

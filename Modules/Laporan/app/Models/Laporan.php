@@ -12,12 +12,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Laporan extends Model
 {
+    use HasFactory;
+
     protected static function newFactory()
     {
-        return \Modules\Laporan\Database\factories\LaporanFactory::new();
+        return \Modules\Laporan\Database\Factories\LaporanFactory::new();
     }
-    
-    use HasFactory;
 
     protected $table = 'laporan';
     protected $primaryKey = 'kode_laporan';

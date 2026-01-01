@@ -39,11 +39,6 @@ export default function ReportModal({ isOpen, onClose, kategori, isEdit = false,
         e.preventDefault();
         
         if (isEdit && report) {
-             // Use POST with _method: PUT for file uploads if needed, or just PUT if no files.
-             // Inertia supports forceFormData which usually handles files even with PUT/PATCH in recent versions,
-             // but standard Laravel requires POST with _method=PUT for multipart.
-             // However, let's try standard router.put or form.put first.
-             // Actually, for file uploads update, commonly we use POST with _method: PUT.
              
              post(`/laporan/${report.kode_laporan}`, {
                 _method: 'PUT',
@@ -66,15 +61,6 @@ export default function ReportModal({ isOpen, onClose, kategori, isEdit = false,
             });
         }
     }
-    
-    // Add _method field to data if editing? No, use Inertia options or router.
-    // The simplified version above: `post(url, { _method: 'PUT' ... })` is valid?
-    // Inertia `useForm` has `put` method. `put` doesn't support FormData (files) natively in older axios/inertia setups?
-    // Laravel Inertia adapter usually handles this. Let's use `post` with `_method: 'PUT'` manually added to data if we want simply.
-    // Actually, `useForm` `post` takes url and options.
-    
-    // Correction: `useForm` helpers directly correspond to methods.
-    // For files: We must use POST and spoof method in Laravel.
     const submitForm = (e) => {
         e.preventDefault();
         
