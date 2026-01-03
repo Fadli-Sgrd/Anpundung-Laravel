@@ -28,24 +28,9 @@ class LaporanController extends Controller
                 ->paginate(10);
         }
 
-
-
         $kategori = Kategori::all()->sortBy(fn($k) => $k->nama_kategori === 'Lainnya' ? 1 : 0)->values();
         return Inertia::render('Laporan/Index', compact('laporan', 'kategori'));
     }
-
-
-    /**
-     * Menampilkan form tambah laporan
-     */
-    public function create()
-    {
-        $kategori = Kategori::all()->sortBy(fn($k) => $k->nama_kategori === 'Lainnya' ? 1 : 0)->values();
-
-
-        return view('laporan::create', compact('kategori'));
-    }
-
 
     /**
      * Simpan laporan baru
@@ -71,7 +56,6 @@ class LaporanController extends Controller
             'status_tindakan' => 'Pending'
         ]);
 
-        // Handle uploaded bukti files (if any)
         if ($request->hasFile('bukti')) {
             $files = $request->file('bukti');
             foreach ($files as $file) {
@@ -98,33 +82,11 @@ class LaporanController extends Controller
     }
 
     /**
-     * Detail laporan
-     */
-    public function show($kode_laporan)
-    {
-        $laporan = Laporan::with(['kategori', 'bukti', 'user'])
-            ->where('kode_laporan', $kode_laporan)
-            ->firstOrFail();
-
-        // User can only see their own laporan (not for berita/public view)
-        if (Auth::check() && Auth::user()->role !== 'admin') {
-            if ($laporan->user_id !== Auth::id()) {
-                abort(403, 'Unauthorized');
-            }
-        }
-
-        return view('laporan::show', compact('laporan'));
-    }
-
-
-    /**
      * Update status laporan (admin only)
      */
     public function updateStatus(Request $request, $kode_laporan)
     {
         $laporan = Laporan::where('kode_laporan', $kode_laporan)->firstOrFail();
-        
-        // Authorize using policy
         $this->authorize('updateStatus', $laporan);
 
         $request->validate([
@@ -135,9 +97,8 @@ class LaporanController extends Controller
             'status_tindakan' => $request->status_tindakan
         ]);
 
-        return redirect()->back()->with('success', 'Status laporan berhasil diperbarui menjadi ' . $request->status_tindakan);
+        return redirect()->back()->with('success', 'Status laporan berhasil diperbarui!');
     }
-
 
     /**
      * Update laporan
@@ -146,12 +107,10 @@ class LaporanController extends Controller
     {
         $laporan = Laporan::where('kode_laporan', $kode_laporan)->firstOrFail();
 
-        // Check auth
         if (Auth::user()->id !== $laporan->user_id && Auth::user()->role !== 'admin') {
             abort(403, 'Unauthorized');
         }
 
-        // Only allow update if pending
         if ($laporan->status_tindakan !== 'Pending') {
              return redirect()->back()->withErrors(['Laporan tidak dapat diedit karena sudah diproses.']);
         }
@@ -173,7 +132,6 @@ class LaporanController extends Controller
             'id_kategori'     => $request->id_kategori,
         ]);
 
-        // Handle uploaded bukti files (add new ones)
         if ($request->hasFile('bukti')) {
             $files = $request->file('bukti');
             foreach ($files as $file) {
@@ -199,18 +157,15 @@ class LaporanController extends Controller
     {
         $laporan = Laporan::where('kode_laporan', $kode_laporan)->firstOrFail();
 
-        // Check auth
         if (!Auth::check()) abort(403, 'Unauthorized');
 
-        // Admin dapat menghapus semua; user hanya punya mereka sendiri
         $isAdmin = Auth::user()->role === 'admin';
         $isOwner = $laporan->user_id === Auth::id();
 
         if (!$isAdmin && !$isOwner) {
-            abort(403, 'Unauthorized. Hanya admin atau pemilik yang bisa menghapus.');
+            abort(403, 'Unauthorized');
         }
 
-        // delete related bukti files
         foreach ($laporan->bukti as $b) {
             if ($b->path_file && Storage::disk('public')->exists($b->path_file)) {
                 Storage::disk('public')->delete($b->path_file);

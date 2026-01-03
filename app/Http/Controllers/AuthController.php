@@ -14,7 +14,8 @@ class AuthController extends Controller
      */
     public function loginForm()
     {
-        return view('auth.login');
+        $userCount = User::count();
+        return view('auth.login', compact('userCount'));
     }
 
     /**
@@ -49,7 +50,8 @@ class AuthController extends Controller
      */
     public function registerForm()
     {
-        return view('auth.login');
+        $userCount = User::count();
+        return view('auth.register', compact('userCount'));
     }
 
     /**

@@ -150,17 +150,17 @@ export default function NewsIndex({ news, page_title, filters }) {
                     )}
 
                     {/* Pagination */}
-                    {news.links.length > 3 && (
-                        <div className="flex justify-center items-center gap-3 mt-12 pb-12">
+                    {news.links?.length > 3 && (
+                        <div className="flex justify-center items-center gap-2 mt-12 pb-12">
                             {news.links.map((link, index) => (
                                 <Link
                                     key={index}
                                     href={link.url || "#"}
-                                    className={`min-w-[50px] h-[50px] flex items-center justify-center rounded-2xl text-sm font-black transition-all duration-300 ${
+                                    className={`px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 ${
                                         link.active
-                                            ? "bg-blue-600 text-white shadow-xl shadow-blue-200 scale-110"
+                                            ? "bg-blue-600 text-white shadow-lg shadow-blue-200"
                                             : link.url
-                                            ? "bg-white text-slate-600 hover:bg-white border border-slate-200 hover:border-blue-400 hover:text-blue-600 hover:shadow-lg hover:shadow-blue-50 shadow-sm"
+                                            ? "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
                                             : "bg-slate-50 text-slate-300 cursor-not-allowed border border-slate-100"
                                     }`}
                                     dangerouslySetInnerHTML={{ __html: link.label }}

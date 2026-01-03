@@ -7,9 +7,7 @@ Route::middleware(['web', 'auth'])->group(function () {
 
     // List laporan: admin sees all, user sees only their own
     Route::get('/laporan', [LaporanController::class, 'index']);
-    Route::get('/laporan/create', [LaporanController::class, 'create']);
     Route::post('/laporan', [LaporanController::class, 'store']);
-    Route::get('/laporan/{kode_laporan}', [LaporanController::class, 'show']);
     Route::put('/laporan/{kode_laporan}', [LaporanController::class, 'update']); // Add this for Edit functionality
 
     // Admin actions (controller will enforce admin check)
