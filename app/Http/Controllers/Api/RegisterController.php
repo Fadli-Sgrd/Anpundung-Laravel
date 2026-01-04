@@ -37,11 +37,17 @@ class RegisterController extends Controller
         ]);
 
         // 3. Kirim Respon Sukses + Token
+        // Hanya return fields yang diperlukan (jangan full model)
         return response()->json([
             'status'  => true,
             'message' => 'Registrasi Berhasil',
             'data'    => [
-                'user'  => $user,
+                'user'  => [
+                    'id'    => $user->id,
+                    'name'  => $user->name,
+                    'email' => $user->email,
+                    'role'  => $user->role,
+                ],
                 'token' => $user->api_token // Kirim token biar HP bisa langsung simpan
             ]
         ], 201);
