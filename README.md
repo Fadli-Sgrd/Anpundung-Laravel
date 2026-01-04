@@ -95,3 +95,5 @@ Penggunaan di luar konteks tersebut menjadi tanggung jawab masing-masing pihak.
 Anpundung Team
 Mahasiswa D4 Sistem Informasi Kota Cerdas
 Universitas Telkom
+
+Our Website : https://annpundung.sisteminformasikotacerdas.id
