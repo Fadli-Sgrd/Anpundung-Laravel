@@ -38,23 +38,21 @@ export default function NewsIndex({ news, page_title, filters }) {
 
                 <div className="container mx-auto px-6">
 
-                            {/* Search Section */}
-                            <div className="flex justify-end mb-16 -mt-100">
-                                <SearchInput 
-                                    routeName="news.index" 
-                                    initialValue={filters?.search || ""} 
-                                    placeholder="Cari berita berdasarkan judul atau konten..."
-                                />
-                            </div>
-                    {/* Featured Section (Optional - if data exists) */}
-                    {(news.data.length > 0 || filters?.search) && (
-                        <div className="mb-16">
-                            <div className="flex items-center justify-between mb-8">
-                                <h2 className="text-3xl font-extrabold text-slate-800 tracking-tight flex items-center gap-3">
-                                    {filters?.search ? `Hasil Pencarian: "${filters.search}"` : 'Berita Terbaru'}
-                                    <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-                                </h2>
-                            </div>
+                    {/* Header & Search Section (Merged) */}
+                    <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
+                        <h2 className="text-3xl font-extrabold text-slate-800 tracking-tight flex items-center gap-3">
+                            {filters?.search ? `Hasil Pencarian: "${filters.search}"` : 'Berita Terbaru'}
+                            <span className="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                        </h2>
+
+                        <div className="w-full md:w-auto md:min-w-[400px]">
+                            <SearchInput 
+                                routeName="news.index" 
+                                initialValue={filters?.search || ""} 
+                                placeholder="Cari berita berdasarkan judul atau konten..."
+                            />
+                        </div>
+                    </div>
 
 
 
@@ -129,8 +127,7 @@ export default function NewsIndex({ news, page_title, filters }) {
                                     </Link>
                                 ))}
                             </div>
-                        </div>
-                    )}
+
 
                     {/* Empty State */}
                     {news.data.length === 0 && (

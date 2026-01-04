@@ -52,6 +52,8 @@
         <x-footer />
     @endif
 
+    {{-- Modal Blade akan di-include langsung di view home dan edukasi --}}
+
     @stack('scripts')
 </body>
 

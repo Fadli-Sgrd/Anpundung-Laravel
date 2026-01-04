@@ -71,10 +71,18 @@ class LaporanController extends Controller
             }
         }
 
-        if ($request->wantsJson()) {
+        // Untuk AJAX request (bukan Inertia), set flash message dan return JSON
+        if (($request->wantsJson() || $request->ajax()) && !$request->header('X-Inertia')) {
+            // Set flash message hanya jika request dari React (karena React akan reload page)
+            // Blade menggunakan toast JS lokal tanpa reload, jadi tidak butuh flash session
+            if ($request->header('X-Client-Type') === 'React') {
+                session()->flash('success', 'Laporan berhasil dikirim!');
+            }
+            
             return response()->json([
                 'success' => true,
-                'kode_laporan' => $laporan->kode_laporan
+                'kode_laporan' => $laporan->kode_laporan,
+                'message' => 'Laporan berhasil dikirim!'
             ]);
         }
 
@@ -147,6 +155,18 @@ class LaporanController extends Controller
             }
         }
 
+        // Untuk AJAX request (bukan Inertia), set flash message dan return JSON
+        if (($request->wantsJson() || $request->ajax()) && !$request->header('X-Inertia')) {
+            if ($request->header('X-Client-Type') === 'React') {
+                session()->flash('success', 'Laporan berhasil diperbarui!');
+            }
+            return response()->json([
+                'success' => true,
+                'kode_laporan' => $laporan->kode_laporan,
+                'message' => 'Laporan berhasil diperbarui!'
+            ]);
+        }
+
         return redirect()->back()->with('success', 'Laporan berhasil diperbarui!');
     }
 
@@ -174,6 +194,17 @@ class LaporanController extends Controller
         }
 
         $laporan->delete();
+
+        // Untuk AJAX request (bukan Inertia), set flash message dan return JSON
+        if ((request()->wantsJson() || request()->ajax()) && !request()->header('X-Inertia')) {
+            if (request()->header('X-Client-Type') === 'React') {
+                session()->flash('success', 'Laporan berhasil dihapus');
+            }
+            return response()->json([
+                'success' => true,
+                'message' => 'Laporan berhasil dihapus'
+            ]);
+        }
 
         return redirect()->back()->with('success', 'Laporan dihapus');
     }

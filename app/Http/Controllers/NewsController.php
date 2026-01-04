@@ -49,9 +49,14 @@ class NewsController extends Controller
      */
     public function show($slug)
     {
-        $newsItem = News::with('user')->where('slug', $slug)
-            ->published()
-            ->firstOrFail();
+        $query = News::with('user')->where('slug', $slug);
+
+        // Jika bukan admin, hanya tampilkan yang published
+        if (!Auth::check() || Auth::user()->role !== 'admin') {
+            $query->published();
+        }
+
+        $newsItem = $query->firstOrFail();
 
         return Inertia::render('News/Show', [
             'news' => [
@@ -61,7 +66,7 @@ class NewsController extends Controller
                 'content' => $newsItem->content,
                 'image' => $newsItem->image,
                 'author' => $newsItem->user ? $newsItem->user->name : 'Admin',
-                'published_at' => $newsItem->published_at->translatedFormat('l, d F Y H:i'),
+                'published_at' => $newsItem->published_at?->translatedFormat('l, d F Y H:i'),
                 'related' => News::with('user')->where('id', '!=', $newsItem->id)
                     ->published()
                     ->latest('published_at')
@@ -138,6 +143,14 @@ class NewsController extends Controller
             'published_at' => 'nullable|date',
             'is_published' => 'boolean',
         ]);
+
+        // Default is_published to false if not present
+        $validated['is_published'] = $request->boolean('is_published');
+        
+        // If published but no date, set to now. If not published, date is nullable.
+        if ($validated['is_published'] && empty($validated['published_at'])) {
+            $validated['published_at'] = now();
+        }
 
         // Handle image upload
         if ($request->hasFile('image')) {
