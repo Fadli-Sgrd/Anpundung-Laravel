@@ -4,10 +4,12 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
     plugins: [
+        react({
+            include: "**/*.{jsx,tsx}",
+        }),
         laravel({
-            input: ["resources/css/app.css", "resources/js/app.jsx"],
+            input: ["resources/css/app.css", "resources/js/app.jsx", "resources/js/report-modal-bridge.jsx"],
             refresh: true,
         }),
-        react(),
     ],
 });

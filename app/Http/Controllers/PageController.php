@@ -16,8 +16,10 @@ class PageController extends Controller
      */
     public function home()
     {
-         $kategori = Kategori::all();
-        return Inertia::render('Home', compact('kategori'));
+         $kategori = Kategori::all()->sortBy(function($k) {
+            return $k->nama_kategori === 'Lainnya' ? 1 : 0;
+         })->values();
+        return view('pages.home', compact('kategori'));
     }
 
     /**
@@ -25,8 +27,10 @@ class PageController extends Controller
      */
     public function edukasi()
     {
-     $kategori = Kategori::all();
-        return Inertia::render('Edukasi', compact('kategori'));
+        $kategori = Kategori::all()->sortBy(function($k) {
+            return $k->nama_kategori === 'Lainnya' ? 1 : 0;
+         })->values();
+        return view('pages.edukasi', compact('kategori'));
     }
     /**
      * Profile - user profile page

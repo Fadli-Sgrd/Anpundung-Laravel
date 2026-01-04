@@ -20,9 +20,9 @@ export default function AdminIndex({ news, page_title, filters }) {
             <Head title={page_title || "Kelola Berita"} />
 
             <div className="max-w-7xl mx-auto px-4 py-8">
-                {/* Header Section */}
-                <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-10">
-                    <div>
+                {/* Header Section with Search */}
+                <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-10">
+                    <div className="flex-1">
                         <h1 className="text-3xl font-extrabold text-slate-800 mb-2">
                             {page_title || "Kelola Berita"}
                         </h1>
@@ -30,19 +30,20 @@ export default function AdminIndex({ news, page_title, filters }) {
                             Kelola semua konten berita untuk masyarakat Bandung.
                         </p>
                     </div>
-                    <PrimaryButton href={route("admin.news.create")}>
-                        <i className="bx bx-plus-circle text-xl"></i>
-                        <span className="relative">Tulis Berita Baru</span>
-                    </PrimaryButton>
-                </div>
-
-                {/* Search & Filters */}
-                <div className="mb-10 flex justify-start">
-                    <SearchInput 
-                        routeName="admin.news.index" 
-                        initialValue={filters?.search || ""} 
-                        placeholder="Cari judul atau ringkasan berita..."
-                    />
+                    
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full md:w-auto">
+                        <div className="w-full sm:w-72">
+                            <SearchInput 
+                                routeName="admin.news.index" 
+                                initialValue={filters?.search || ""} 
+                                placeholder="Cari berita..."
+                            />
+                        </div>
+                        <PrimaryButton href={route("admin.news.create")} className="justify-center whitespace-nowrap">
+                            <i className="bx bx-plus-circle text-xl"></i>
+                            <span className="relative">Tulis Berita Baru</span>
+                        </PrimaryButton>
+                    </div>
                 </div>
 
                 {/* Content Area */}
